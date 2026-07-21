@@ -11,52 +11,18 @@
 
 ## Interview / Portfolio 速览
 
-**适合岗位：** 医药 RWE / HEOR、观察性研究、医疗健康数据科学、生统编程
 
-**5 分钟怎么讲：** 研究问题 → 队列 1135→69 → Table 1 基线不平衡 → 未调整 Other 组事件率更高 → PSM/IPTW/回归校正后效应缩小且 CI 宽 → 强调方法管线 + 局限（合成数据、小样本）
+** 研究问题 → 队列 1135→69 → Table 1 基线不平衡 → 未调整 Other 组事件率更高 → PSM/IPTW/回归校正后效应缩小且 CI 宽 → 强调方法管线 + 局限（合成数据、小样本）
 
-**面试官优先打开：**
+**优先打开：**
 
 1. `reports/RWE_Evidence_Report.pdf` — 完整证据报告  
 2. `reports/Table1_Baseline.xlsx` — 基线 + SMD  
 3. `reports/Table3_Treatment_Effect.xlsx` — 因果效应  
 4. `reports/figures/figure_cohort_flow.png` — 队列流程图  
 
-**简历 bullet（中文，按需删减）：**
 
-- 基于 Synthea 合成 EHR，搭建 **8 步可复现 RWE 管线**（质控→队列→Table1→暴露/结局→PSM/IPTW→DoWhy/EconML→证据报告）  
-- 使用 **Python / statsmodels / lifelines / scikit-learn** 实现模块化 CLI + Jupyter，输出 HTML/PDF/Excel  
-- 识别并处理 **confounding by indication**（基线 SMD、1:1 PS 匹配、IPTW ATE/ATT、双重稳健、Bootstrap 敏感性）  
-- 自动生成制药风格 **RWE Evidence Report** 与 Table 1–3  
 
-**Resume bullets (English):**
-
-- Built an **8-step reproducible RWE pipeline** on Synthea synthetic EHR: QC → cohort → baseline → exposure/outcomes → propensity scoring → causal inference → evidence report  
-- Implemented **PS matching, stabilized IPTW (ATE/ATT), multivariable adjustment, doubly robust AIPW**, and sensitivity analyses in Python  
-- Delivered **publication-style tables (Excel)** and **HTML/PDF evidence reports** via Jinja2 + openpyxl  
-- Documented **confounding by indication** and causal assumptions; positioned as **methods demonstration**, not clinical claims  
-
----
-
-## 上传 GitHub
-
-仓库已配置 `.gitignore`：**不提交** `data/synthea_csv/*.csv`（约 780 MB），便于克隆与面试审阅。  
-**会提交：** 源码、`notebooks/`、`reports/` 关键产出（PDF/HTML/Excel/图表）、`data/synthea_csv/README.md`。
-
-```powershell
-cd e:\rwe-project
-git init
-git add .
-git status   # 确认无 *.csv 被 staged
-git commit -m "Add synthetic RWE diabetes CER pipeline (Steps 1-8)"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/rwe-project.git
-git push -u origin main
-```
-
-克隆后复现全流程：按 [data/synthea_csv/README.md](data/synthea_csv/README.md) 放入 Synthea CSV，再运行下方「快速开始」。
-
----
 ## 研究问题
 
 **糖尿病药物治疗对临床结局的因果/比较效应是什么？**
