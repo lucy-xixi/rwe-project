@@ -1,0 +1,6 @@
+treatment_group,n_patients,percentage
+Metformin users,44,63.8
+Other diabetes medication users,15,21.7
+Multiple medication users,10,14.5
+Metformin users (assigned at index),49,71.0
+Other diabetes medication users (assigned at index),20,29.0

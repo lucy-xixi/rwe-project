@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ study_title }}</title>
+  <style>
+    @page { size: A4; margin: 2cm; }
+    body { font-family: "Segoe UI", Calibri, Arial, sans-serif; color: #1e293b; line-height: 1.55; margin: 0; background: #f8fafc; }
+    .page { max-width: 920px; margin: 0 auto; background: #fff; padding: 40px 48px; box-shadow: 0 2px 16px rgba(15,23,42,.08); }
+    .title-page { text-align: center; padding: 80px 20px 60px; border-bottom: 3px solid #1e40af; margin-bottom: 36px; }
+    .title-page h1 { font-size: 1.75rem; color: #1e3a8a; margin-bottom: 12px; line-height: 1.3; }
+    .title-page .subtitle { font-size: 1.05rem; color: #475569; margin: 8px 0; }
+    .title-page .meta { font-size: 0.9rem; color: #64748b; margin-top: 24px; }
+    h2 { color: #1e40af; font-size: 1.25rem; border-bottom: 2px solid #dbeafe; padding-bottom: 6px; margin-top: 32px; }
+    h3 { color: #334155; font-size: 1.05rem; margin-top: 20px; }
+    p, li { font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eff6ff; font-weight: 600; color: #1e3a8a; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .abstract { background: #f0f9ff; border-left: 4px solid #0284c7; padding: 16px 20px; margin: 20px 0; }
+    .key-finding { background: #ecfdf5; border-left: 4px solid #059669; padding: 14px 18px; margin: 16px 0; }
+    .limitation { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 18px; margin: 16px 0; }
+    figure { text-align: center; margin: 20px 0; }
+    figure img { max-width: 100%; border: 1px solid #e2e8f0; }
+    figcaption { font-size: 0.85rem; color: #64748b; margin-top: 8px; font-style: italic; }
+    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 0.8rem; color: #94a3b8; text-align: center; }
+    ul.compact { padding-left: 20px; }
+    ul.compact li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="title-page">
+      <h1>{{ study_title }}</h1>
+      <p class="subtitle">Real-World Evidence Report — Synthetic RWE Diabetes Treatment Study</p>
+      <p class="subtitle">Comparative Effectiveness: Metformin vs Other Diabetes Medications</p>
+      <p class="meta">Report generated: {{ report_date }}<br>Final analytic cohort: N = {{ n_patients }}</p>
+    </div>
+
+    <div class="abstract">
+      <strong>Abstract.</strong> {{ abstract }}
+    </div>
+
+    <h2>1. Introduction</h2>
+    <p><strong>Research question:</strong> {{ research_question }}</p>
+    <p>{{ introduction }}</p>
+
+    <h2>2. Methods</h2>
+    <h3>2.1 Study design and data source</h3>
+    <ul class="compact">
+      <li><strong>Design:</strong> {{ study_design }}</li>
+      <li><strong>Data source:</strong> {{ data_source }}</li>
+      <li><strong>Population:</strong> {{ population_description }}</li>
+      <li><strong>Treatment comparison:</strong> {{ treatment_comparison }}</li>
+      <li><strong>Follow-up:</strong> {{ followup_description }}</li>
+      <li><strong>Primary outcome:</strong> {{ primary_outcome }}</li>
+    </ul>
+
+    <h3>2.2 Statistical analysis</h3>
+    <p>{{ methods_text }}</p>
+
+    <h2>3. Results</h2>
+
+    <h3>3.1 Study population and cohort flow</h3>
+    <p>{{ cohort_summary }}</p>
+    <figure>
+      <img src="{{ cohort_flow_image }}" alt="Cohort flow diagram">
+      <figcaption>Figure 1. Patient selection flow from initial population to final analytic cohort and treatment groups.</figcaption>
+    </figure>
+
+    <h3>3.2 Baseline characteristics (Table 1)</h3>
+    <p>{{ baseline_interpretation }}</p>
+    {{ table1_html | safe }}
+
+    <h3>3.3 Treatment exposure</h3>
+    <p>{{ exposure_summary }}</p>
+    <ul class="compact">
+      {% for item in exposure_limitations %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>3.4 Clinical outcomes (Table 2)</h3>
+    <p>{{ outcome_summary_text }}</p>
+    {{ table2_html | safe }}
+    <p><strong>Kaplan-Meier analysis (primary composite):</strong> {{ km_summary }}</p>
+
+    <h3>3.5 Causal treatment effects (Table 3)</h3>
+    <p>{{ causal_methods_text }}</p>
+    {{ table3_html | safe }}
+
+    <div class="key-finding">
+      <strong>Statistical interpretation.</strong> {{ interpretation }}
+    </div>
+
+    <h2>4. Discussion</h2>
+    <p>{{ discussion }}</p>
+
+    <h2>5. Limitations</h2>
+    <ul class="compact">
+      {% for item in limitations %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>6. Conclusion</h2>
+    <p>{{ conclusion }}</p>
+
+    <div class="footer">
+      Synthetic RWE Diabetes Treatment Study | Steps 1–8 Evidence Generation Pipeline<br>
+      This report is intended for methodological demonstration using Synthea synthetic data.
+    </div>
+  </div>
+</body>
+</html>

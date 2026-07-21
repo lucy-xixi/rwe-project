@@ -1,0 +1,5 @@
+analysis,n_matched_pairs,odds_ratio,p_value,pct_balanced
+PSM caliper 0.1 SD,8,0.294,0.4737,71.4
+PSM caliper 0.2 SD,8,0.294,0.4737,71.4
+PSM caliper 0.3 SD,8,0.294,0.4737,71.4
+"PSM reduced covariate model (age, gender only)",12,2.2,0.5443,

@@ -1,0 +1,7 @@
+method,effect_measure,estimate,ci_lower,ci_upper,p_value,n,n_events,odds_ratio_other_vs_metformin,or_ci_lower,or_ci_upper,risk_metformin,risk_other
+Multivariable logistic regression,Odds ratio (Other vs Metformin),1.195,0.101,14.153,0.8878,69,55.0,,,,,
+IPTW ATE (stabilized),Risk difference (Metformin - Other),0.1058,,,0.3384,69,,0.576,0.186,1.781,0.7896,0.6837
+IPTW ATT (stabilized),Risk difference (Metformin - Other),0.1407,,,0.209,69,,0.517,0.184,1.447,0.7551,0.6144
+Doubly robust AIPW + weighted outcome regression,Average treatment effect (risk difference),0.1955,,,0.2399,69,55.0,0.236,0.021,2.626,,
+DoWhy backdoor propensity score weighting (ATE),Average treatment effect (DoWhy value scale),0.0811,,,,69,,,,,,
+EconML LinearDML (ATE),Average treatment effect (probability scale),0.1902,0.0369,0.3434,,69,,,,,,

@@ -1,0 +1,6 @@
+method,effect_measure,estimate,ci_lower,ci_upper,p_value,n,n_pairs,risk_metformin,risk_other,iptw_or_other_vs_metformin,iptw_or_ci_lower,iptw_or_ci_upper,risk_metformin_weighted,risk_other_weighted,n_events
+PSM logistic regression (matched cohort),Odds ratio (Other vs Metformin),0.294,0.01,8.366,0.4737,16,8.0,,,,,,,,
+Risk difference (matched cohort),Risk difference (Metformin - Other),0.125,-0.1042,0.3542,,16,,1.0,0.875,,,,,,
+Risk difference (unadjusted),Risk difference (Metformin - Other),-0.1449,-0.3232,0.0334,,69,,0.7551,0.9,,,,,,
+IPTW (stabilized weights),Average treatment effect (risk difference),0.1058,,,0.3384,69,,,,0.576,0.186,1.781,0.7896,0.6837,
+IPTW Cox proportional hazards (lifelines),Hazard ratio (Other vs Metformin),1.928,0.854,4.353,0.1139,69,,,,,,,,,55.0

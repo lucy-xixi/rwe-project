@@ -1,0 +1,31 @@
+outcome_type,treatment_group,n_patients,n_events,event_percentage,person_years,events_per_100_patient_years
+cardiovascular_event,Metformin users,49,13,26.5,414.74,3.13
+cardiovascular_event,Other diabetes medication users,20,5,25.0,155.86,3.21
+cardiovascular_event,Overall,69,18,26.1,570.6,3.15
+diabetes_complication,Metformin users,49,16,32.7,414.74,3.86
+diabetes_complication,Other diabetes medication users,20,10,50.0,155.86,6.42
+diabetes_complication,Overall,69,26,37.7,570.6,4.56
+diabetic_nephropathy,Metformin users,49,11,22.4,414.74,2.65
+diabetic_nephropathy,Other diabetes medication users,20,10,50.0,155.86,6.42
+diabetic_nephropathy,Overall,69,21,30.4,570.6,3.68
+diabetic_neuropathy,Metformin users,49,3,6.1,414.74,0.72
+diabetic_neuropathy,Other diabetes medication users,20,0,0.0,155.86,0.0
+diabetic_neuropathy,Overall,69,3,4.3,570.6,0.53
+diabetic_retinopathy,Metformin users,49,1,2.0,414.74,0.24
+diabetic_retinopathy,Other diabetes medication users,20,0,0.0,155.86,0.0
+diabetic_retinopathy,Overall,69,1,1.4,570.6,0.18
+hospitalization_event,Metformin users,49,33,67.3,414.74,7.96
+hospitalization_event,Other diabetes medication users,20,17,85.0,155.86,10.91
+hospitalization_event,Overall,69,50,72.5,570.6,8.76
+primary_composite_event,Metformin users,49,37,75.5,414.74,8.92
+primary_composite_event,Other diabetes medication users,20,18,90.0,155.86,11.55
+primary_composite_event,Overall,69,55,79.7,570.6,9.64
+medication_change,Metformin users,49,48,98.0,414.74,11.57
+medication_change,Other diabetes medication users,20,16,80.0,155.86,10.27
+medication_change,Overall,69,64,92.8,570.6,11.22
+disease_progression,Metformin users,49,4,8.2,414.74,0.96
+disease_progression,Other diabetes medication users,20,1,5.0,155.86,0.64
+disease_progression,Overall,69,5,7.2,570.6,0.88
+high_encounter_utilization,Metformin users,49,34,69.4,414.74,8.2
+high_encounter_utilization,Other diabetes medication users,20,16,80.0,155.86,10.27
+high_encounter_utilization,Overall,69,50,72.5,570.6,8.76

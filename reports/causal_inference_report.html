@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Advanced Causal Inference Report — RWE Diabetes Study</title>
+  <style>
+    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f4f7fb; color: #1f2937; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header { background: linear-gradient(135deg, #312e81, #4f46e5); color: #fff; padding: 28px; border-radius: 12px; margin-bottom: 24px; }
+    section { background: #fff; border: 1px solid #dbe3ef; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #4338ca; margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { border-bottom: 1px solid #dbe3ef; padding: 8px 10px; text-align: left; }
+    th { background: #eef2ff; }
+    .warning { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px; margin: 12px 0; }
+    .conclusion { background: #ecfdf5; border-left: 4px solid #059669; padding: 12px; margin: 12px 0; }
+    figure { text-align: center; margin: 16px 0; }
+    img { max-width: 100%; border: 1px solid #dbe3ef; border-radius: 8px; }
+    pre { background: #f3f4f6; padding: 12px; overflow-x: auto; font-size: 0.85rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Advanced Causal Inference Report</h1>
+      <p>Step 7 — Regression, IPTW, Doubly Robust, Bootstrap, and HTE Analysis</p>
+      <p>Metformin users vs Other diabetes medication users | Full cohort N = 69 | Matched N = 16</p>
+    </header>
+
+    <section>
+      <h2>1. Study Objective</h2>
+      <p>Estimate the causal effect of diabetes pharmacotherapy (metformin vs other diabetes medications)
+      on the composite outcome of diabetes-related complications or hospitalization using advanced
+      observational causal inference methods appropriate for pharmaceutical real-world evidence.</p>
+    </section>
+
+    <section>
+      <h2>2. Causal Question</h2>
+      <p><strong>What is the causal effect of diabetes treatment on clinical outcomes?</strong></p>
+      <pre>Treatment (Metformin vs Other) → Outcome (complication / hospitalization)
+Adjusted for: Age, Gender (female), Hypertension, Cardiovascular disease, Obesity, Hyperlipidemia, Kidney disease</pre>
+    </section>
+
+    <section>
+      <h2>3. DAG and Causal Assumptions</h2>
+      <p>The causal directed acyclic graph posits that age, gender, disease severity (partially unmeasured),
+      and comorbidities confound the treatment–outcome relationship. Comorbidity burden proxies disease severity.</p>
+      <ul><li><strong>Exchangeability:</strong> Conditional exchangeability: treatment assignment is independent of potential outcomes given measured baseline covariates (no unmeasured confounding given X).</li><li><strong>Positivity:</strong> Positivity (overlap): each patient has non-zero probability of receiving either metformin or other diabetes medications within strata of measured confounders.</li><li><strong>Consistency:</strong> Consistency: observed outcome equals the potential outcome under the treatment actually received; no interference between patients.</li></ul>
+    </section>
+
+    <section>
+      <h2>4. Confounder Adjustment Strategy</h2>
+      <p>All baseline covariates were measured at or before treatment initiation (index date).
+      Adjustment strategies include multivariable regression, propensity score IPTW (ATE and ATT),
+      doubly robust AIPW, DoWhy backdoor identification, and EconML double machine learning.</p>
+    </section>
+
+    <section>
+      <h2>5. Statistical Methods</h2>
+      <ul>
+        <li>Multivariable logistic regression: Outcome ~ Treatment + Covariates</li>
+        <li>Stabilized IPTW for ATE; ATT weights for treated population</li>
+        <li>Doubly robust augmented inverse-probability weighting (AIPW)</li>
+        <li>Bootstrap resampling (500 iterations) for IPTW ATE uncertainty</li>
+        <li>DoWhy backdoor propensity score weighting</li>
+        <li>EconML LinearDML with gradient boosting nuisance models</li>
+        <li>Sensitivity: drop-one covariate, alternative PS models, matching calipers</li>
+        <li>Subgroup analyses: age group, gender, comorbidity burden</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Treatment Effect Estimates</h2>
+      <table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>method</th>
+      <th>effect_measure</th>
+      <th>estimate</th>
+      <th>ci_lower</th>
+      <th>ci_upper</th>
+      <th>p_value</th>
+      <th>n</th>
+      <th>n_events</th>
+      <th>odds_ratio_other_vs_metformin</th>
+      <th>or_ci_lower</th>
+      <th>or_ci_upper</th>
+      <th>risk_metformin</th>
+      <th>risk_other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Multivariable logistic regression</td>
+      <td>Odds ratio (Other vs Metformin)</td>
+      <td>1.1950</td>
+      <td>0.1010</td>
+      <td>14.1530</td>
+      <td>0.8878</td>
+      <td>69</td>
+      <td>55.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>IPTW ATE (stabilized)</td>
+      <td>Risk difference (Metformin - Other)</td>
+      <td>0.1058</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.3384</td>
+      <td>69</td>
+      <td>NaN</td>
+      <td>0.576</td>
+      <td>0.186</td>
+      <td>1.781</td>
+      <td>0.7896</td>
+      <td>0.6837</td>
+    </tr>
+    <tr>
+      <td>IPTW ATT (stabilized)</td>
+      <td>Risk difference (Metformin - Other)</td>
+      <td>0.1407</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.2090</td>
+      <td>69</td>
+      <td>NaN</td>
+      <td>0.517</td>
+      <td>0.184</td>
+      <td>1.447</td>
+      <td>0.7551</td>
+      <td>0.6144</td>
+    </tr>
+    <tr>
+      <td>Doubly robust AIPW + weighted outcome regression</td>
+      <td>Average treatment effect (risk difference)</td>
+      <td>0.1955</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.2399</td>
+      <td>69</td>
+      <td>55.0</td>
+      <td>0.236</td>
+      <td>0.021</td>
+      <td>2.626</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>DoWhy backdoor propensity score weighting (ATE)</td>
+      <td>Average treatment effect (DoWhy value scale)</td>
+      <td>0.0811</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>69</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>EconML LinearDML (ATE)</td>
+      <td>Average treatment effect (probability scale)</td>
+      <td>0.1902</td>
+      <td>0.0369</td>
+      <td>0.3434</td>
+      <td>NaN</td>
+      <td>69</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+      <h3>Bootstrap 95% CI</h3>
+      <table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>metric</th>
+      <th>n_bootstrap</th>
+      <th>estimate</th>
+      <th>ci_lower</th>
+      <th>ci_upper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IPTW ATE risk difference (bootstrap)</td>
+      <td>500</td>
+      <td>-0.0689</td>
+      <td>-0.283</td>
+      <td>0.1957</td>
+    </tr>
+  </tbody>
+</table>
+      <h3>Subgroup (heterogeneous) effects</h3>
+      <table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>subgroup_variable</th>
+      <th>subgroup_level</th>
+      <th>n</th>
+      <th>n_metformin</th>
+      <th>n_other</th>
+      <th>odds_ratio_other_vs_metformin</th>
+      <th>ci_lower</th>
+      <th>ci_upper</th>
+      <th>p_value</th>
+      <th>risk_metformin</th>
+      <th>risk_other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Age group</td>
+      <td>Age &lt; 65</td>
+      <td>48</td>
+      <td>39</td>
+      <td>9</td>
+      <td>3.060000e-01</td>
+      <td>0.015</td>
+      <td>6.103</td>
+      <td>0.438</td>
+      <td>0.718</td>
+      <td>0.889</td>
+    </tr>
+    <tr>
+      <td>Age group</td>
+      <td>Age &gt;= 65</td>
+      <td>21</td>
+      <td>10</td>
+      <td>11</td>
+      <td>1.179610e+16</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.900</td>
+      <td>0.909</td>
+    </tr>
+    <tr>
+      <td>Gender</td>
+      <td>F</td>
+      <td>37</td>
+      <td>24</td>
+      <td>13</td>
+      <td>0.000000e+00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.708</td>
+      <td>0.923</td>
+    </tr>
+    <tr>
+      <td>Gender</td>
+      <td>M</td>
+      <td>32</td>
+      <td>25</td>
+      <td>7</td>
+      <td>5.716015e+09</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.800</td>
+      <td>0.857</td>
+    </tr>
+    <tr>
+      <td>Comorbidity burden</td>
+      <td>Moderate (2-3)</td>
+      <td>44</td>
+      <td>31</td>
+      <td>13</td>
+      <td>9.414018e+08</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.710</td>
+      <td>0.923</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>7. Sensitivity Analysis</h2>
+      <p>Results were re-estimated after sequentially omitting covariates, changing propensity score
+      specifications, and varying 1:1 matching calipers. Estimates that remain directionally consistent
+      support robustness; large shifts indicate sensitivity to modeling assumptions.</p>
+      <table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>analysis_type</th>
+      <th>specification</th>
+      <th>effect_estimate</th>
+      <th>p_value</th>
+      <th>reference_or</th>
+      <th>n_pairs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Drop-one covariate</td>
+      <td>Exclude Age</td>
+      <td>1.1870</td>
+      <td>0.8920</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Drop-one covariate</td>
+      <td>Exclude Gender (female)</td>
+      <td>1.1830</td>
+      <td>0.9010</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Drop-one covariate</td>
+      <td>Exclude Hypertension</td>
+      <td>1.2070</td>
+      <td>0.8761</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Drop-one covariate</td>
+      <td>Exclude Cardiovascular disease</td>
+      <td>1.2200</td>
+      <td>0.8710</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Drop-one covariate</td>
+      <td>Exclude Obesity</td>
+      <td>0.8340</td>
+      <td>0.8398</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Drop-one covariate</td>
+      <td>Exclude Hyperlipidemia</td>
+      <td>1.1510</td>
+      <td>0.9154</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Drop-one covariate</td>
+      <td>Exclude Kidney disease</td>
+      <td>3.6860</td>
+      <td>0.2413</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Propensity model specification</td>
+      <td>Demographics only PS</td>
+      <td>-0.1418</td>
+      <td>NaN</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Propensity model specification</td>
+      <td>Clinical comorbidities only PS</td>
+      <td>0.1036</td>
+      <td>NaN</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Propensity model specification</td>
+      <td>Full covariate PS</td>
+      <td>0.1058</td>
+      <td>NaN</td>
+      <td>1.195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Matching caliper</td>
+      <td>1:1 NN caliper 0.1 SD</td>
+      <td>0.1250</td>
+      <td>NaN</td>
+      <td>1.195</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <td>Matching caliper</td>
+      <td>1:1 NN caliper 0.2 SD</td>
+      <td>0.1250</td>
+      <td>NaN</td>
+      <td>1.195</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <td>Matching caliper</td>
+      <td>1:1 NN caliper 0.3 SD</td>
+      <td>0.1250</td>
+      <td>NaN</td>
+      <td>1.195</td>
+      <td>8.0</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>8. Limitations</h2>
+      <ul>
+        <li>Small sample (N=69) limits precision and subgroup analyses.</li>
+        <li>Disease severity is only partially captured via comorbidity burden.</li>
+        <li>Residual confounding from unmeasured clinical factors (e.g., HbA1c) may remain.</li>
+        <li>Synthea synthetic data may not reflect real-world treatment pathways.</li>
+        <li>Positivity violations in extreme PS strata can destabilize weighting.</li>
+      </ul>
+      <div class="conclusion"><strong>Results estimate the causal effect under assumptions of no unmeasured confounding, correct model specification, and adequate overlap of treatment groups.</strong></div>
+    </section>
+
+    <section>
+      <h2>9. Figures</h2>
+      <figure><img src="figures/causal_dag.png" alt="causal_dag"><figcaption>causal dag</figcaption></figure>
+<figure><img src="figures/advanced_causal_forest_plot.png" alt="advanced_causal_forest_plot"><figcaption>advanced causal forest plot</figcaption></figure>
+<figure><img src="figures/subgroup_treatment_effects.png" alt="subgroup_treatment_effects"><figcaption>subgroup treatment effects</figcaption></figure>
+<figure><img src="figures/advanced_causal_balance_plot.png" alt="advanced_causal_balance_plot"><figcaption>advanced causal balance plot</figcaption></figure>
+
+    </section>
+  </div>
+</body>
+</html>

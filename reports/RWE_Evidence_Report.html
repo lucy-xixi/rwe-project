@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Comparative Effectiveness of Diabetes Treatments Using Synthetic Real-World Data</title>
+  <style>
+    @page { size: A4; margin: 2cm; }
+    body { font-family: "Segoe UI", Calibri, Arial, sans-serif; color: #1e293b; line-height: 1.55; margin: 0; background: #f8fafc; }
+    .page { max-width: 920px; margin: 0 auto; background: #fff; padding: 40px 48px; box-shadow: 0 2px 16px rgba(15,23,42,.08); }
+    .title-page { text-align: center; padding: 80px 20px 60px; border-bottom: 3px solid #1e40af; margin-bottom: 36px; }
+    .title-page h1 { font-size: 1.75rem; color: #1e3a8a; margin-bottom: 12px; line-height: 1.3; }
+    .title-page .subtitle { font-size: 1.05rem; color: #475569; margin: 8px 0; }
+    .title-page .meta { font-size: 0.9rem; color: #64748b; margin-top: 24px; }
+    h2 { color: #1e40af; font-size: 1.25rem; border-bottom: 2px solid #dbeafe; padding-bottom: 6px; margin-top: 32px; }
+    h3 { color: #334155; font-size: 1.05rem; margin-top: 20px; }
+    p, li { font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eff6ff; font-weight: 600; color: #1e3a8a; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .abstract { background: #f0f9ff; border-left: 4px solid #0284c7; padding: 16px 20px; margin: 20px 0; }
+    .key-finding { background: #ecfdf5; border-left: 4px solid #059669; padding: 14px 18px; margin: 16px 0; }
+    .limitation { background: #fff7ed; border-left: 4px solid #ea580c; padding: 14px 18px; margin: 16px 0; }
+    figure { text-align: center; margin: 20px 0; }
+    figure img { max-width: 100%; border: 1px solid #e2e8f0; }
+    figcaption { font-size: 0.85rem; color: #64748b; margin-top: 8px; font-style: italic; }
+    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 0.8rem; color: #94a3b8; text-align: center; }
+    ul.compact { padding-left: 20px; }
+    ul.compact li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="title-page">
+      <h1>Comparative Effectiveness of Diabetes Treatments Using Synthetic Real-World Data</h1>
+      <p class="subtitle">Real-World Evidence Report — Synthetic RWE Diabetes Treatment Study</p>
+      <p class="subtitle">Comparative Effectiveness: Metformin vs Other Diabetes Medications</p>
+      <p class="meta">Report generated: 2026-07-21<br>Final analytic cohort: N = 69</p>
+    </div>
+
+    <div class="abstract">
+      <strong>Abstract.</strong> This real-world evidence report describes a comparative effectiveness study of metformin versus other diabetes medications in 69 adults with type 2 diabetes using Synthea synthetic EHR data. Propensity score matching, inverse probability weighting, and regression adjustment were applied to estimate treatment effects on a composite outcome of diabetes complications or hospitalization. Unadjusted event rates were higher in the other-medication group; adjusted analyses attenuated but did not eliminate differences. Causal interpretation requires no unmeasured confounding and adequate overlap.
+    </div>
+
+    <h2>1. Introduction</h2>
+    <p><strong>Research question:</strong> What is the causal effect of diabetes pharmacotherapy (metformin vs other diabetes medications) on the composite outcome of diabetes-related complications or hospitalization?</p>
+    <p>Type 2 diabetes mellitus requires long-term pharmacotherapy. Metformin is typically first-line therapy, but patients with advanced disease or contraindications may initiate other agents (e.g., insulin). Observational comparative effectiveness research can inform treatment decisions when randomized trials are unavailable, provided rigorous causal methods address confounding by indication.</p>
+
+    <h2>2. Methods</h2>
+    <h3>2.1 Study design and data source</h3>
+    <ul class="compact">
+      <li><strong>Design:</strong> Retrospective observational cohort study with propensity score and regression-based causal inference.</li>
+      <li><strong>Data source:</strong> Synthea synthetic electronic health record (EHR) data (conditions, medications, encounters).</li>
+      <li><strong>Population:</strong> Adults with type 2 diabetes initiating diabetes pharmacotherapy after diagnosis; final cohort N = 69 (49 metformin, 20 other medication at index).</li>
+      <li><strong>Treatment comparison:</strong> Metformin users vs Other diabetes medication users (assigned at first post-diagnosis diabetes medication).</li>
+      <li><strong>Follow-up:</strong> Up to 730 days from index treatment date (administrative censoring at last encounter or death). Mean follow-up ≈ 8.3 years.</li>
+      <li><strong>Primary outcome:</strong> Composite of first post-index diabetes complication, cardiovascular event, or hospitalization/emergency visit</li>
+    </ul>
+
+    <h3>2.2 Statistical analysis</h3>
+    <p>Baseline characteristics were compared using Table 1 with standardized mean differences (SMD). Outcomes were summarized as event counts, percentages, and rates per 100 patient-years. Kaplan-Meier and log-rank tests assessed time to primary composite event. Causal effects were estimated using 1:1 propensity score matching, stabilized IPTW (ATE and ATT), and multivariable logistic regression, supplemented by doubly robust AIPW (Step 7).</p>
+
+    <h2>3. Results</h2>
+
+    <h3>3.1 Study population and cohort flow</h3>
+    <p>The analytic cohort comprised 69 patients selected through sequential eligibility criteria applied to the Synthea patient population (Figure 1).</p>
+    <figure>
+      <img src="figures/figure_cohort_flow.png" alt="Cohort flow diagram">
+      <figcaption>Figure 1. Patient selection flow from initial population to final analytic cohort and treatment groups.</figcaption>
+    </figure>
+
+    <h3>3.2 Baseline characteristics (Table 1)</h3>
+    <p>Baseline characteristics differed between treatment groups before adjustment. 3 of 17 evaluated variables achieved |SMD| < 0.1 (18%), indicating incomplete balance at baseline. Older age, higher comorbidity burden, and greater diabetic nephropathy prevalence in the other-medication group suggest confounding by indication.</p>
+    <table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Category</th>
+      <th>Variable</th>
+      <th>Metformin users</th>
+      <th>Other diabetes medication users</th>
+      <th>Overall (N=69)</th>
+      <th>SMD</th>
+      <th>Balanced (|SMD|&lt;0.1)</th>
+      <th>P-value</th>
+      <th>Sig.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Demographics</td>
+      <td>N</td>
+      <td>49</td>
+      <td>20</td>
+      <td>69</td>
+      <td>0.000</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Age, years — mean (SD)</td>
+      <td>54.8 (11.8)</td>
+      <td>69.4 (16.1)</td>
+      <td>59.1 (14.7)</td>
+      <td>-1.036</td>
+      <td>False</td>
+      <td>0.0003</td>
+      <td>***</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Age, years — median (IQR)</td>
+      <td>51.2 (47.6–63.2)</td>
+      <td>66.1 (56.1–81.5)</td>
+      <td>55.6 (49.4–66.8)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Age, years — min / max</td>
+      <td>36.3 / 95.9</td>
+      <td>44.6 / 99.8</td>
+      <td>36.3 / 99.8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Gender: F</td>
+      <td>24 (49.0%)</td>
+      <td>13 (65.0%)</td>
+      <td>37 (53.6%)</td>
+      <td>-0.322</td>
+      <td>False</td>
+      <td>0.3448</td>
+      <td>NS</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Gender: M</td>
+      <td>25 (51.0%)</td>
+      <td>7 (35.0%)</td>
+      <td>32 (46.4%)</td>
+      <td>0.322</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Race: asian</td>
+      <td>1 (2.0%)</td>
+      <td>0 (0.0%)</td>
+      <td>1 (1.4%)</td>
+      <td>0.202</td>
+      <td>False</td>
+      <td>0.4631</td>
+      <td>NS</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Race: black</td>
+      <td>2 (4.1%)</td>
+      <td>3 (15.0%)</td>
+      <td>5 (7.2%)</td>
+      <td>-0.370</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Race: hawaiian</td>
+      <td>1 (2.0%)</td>
+      <td>0 (0.0%)</td>
+      <td>1 (1.4%)</td>
+      <td>0.202</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Race: native</td>
+      <td>1 (2.0%)</td>
+      <td>0 (0.0%)</td>
+      <td>1 (1.4%)</td>
+      <td>0.202</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Demographics</td>
+      <td>Race: white</td>
+      <td>44 (89.8%)</td>
+      <td>17 (85.0%)</td>
+      <td>61 (88.4%)</td>
+      <td>0.142</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Hypertension</td>
+      <td>27 (55.1%)</td>
+      <td>12 (60.0%)</td>
+      <td>39 (56.5%)</td>
+      <td>-0.097</td>
+      <td>True</td>
+      <td>0.9166</td>
+      <td>NS</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Hyperlipidemia</td>
+      <td>8 (16.3%)</td>
+      <td>4 (20.0%)</td>
+      <td>12 (17.4%)</td>
+      <td>-0.094</td>
+      <td>True</td>
+      <td>0.7343</td>
+      <td>NS</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Obesity</td>
+      <td>49 (100.0%)</td>
+      <td>14 (70.0%)</td>
+      <td>63 (91.3%)</td>
+      <td>0.902</td>
+      <td>False</td>
+      <td>0.0003</td>
+      <td>***</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Cardiovascular disease</td>
+      <td>11 (22.4%)</td>
+      <td>10 (50.0%)</td>
+      <td>21 (30.4%)</td>
+      <td>-0.587</td>
+      <td>False</td>
+      <td>0.0490</td>
+      <td>*</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Chronic kidney disease</td>
+      <td>7 (14.3%)</td>
+      <td>13 (65.0%)</td>
+      <td>20 (29.0%)</td>
+      <td>-1.188</td>
+      <td>False</td>
+      <td>0.0001</td>
+      <td>***</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Diabetic nephropathy</td>
+      <td>7 (14.3%)</td>
+      <td>16 (80.0%)</td>
+      <td>23 (33.3%)</td>
+      <td>-1.716</td>
+      <td>False</td>
+      <td>0.0000</td>
+      <td>***</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Diabetic neuropathy</td>
+      <td>5 (10.2%)</td>
+      <td>5 (25.0%)</td>
+      <td>10 (14.5%)</td>
+      <td>-0.388</td>
+      <td>False</td>
+      <td>0.1399</td>
+      <td>NS</td>
+    </tr>
+    <tr>
+      <td>Clinical characteristics</td>
+      <td>Diabetic retinopathy</td>
+      <td>1 (2.0%)</td>
+      <td>1 (5.0%)</td>
+      <td>2 (2.9%)</td>
+      <td>-0.158</td>
+      <td>False</td>
+      <td>0.4987</td>
+      <td>NS</td>
+    </tr>
+  </tbody>
+</table>
+
+    <h3>3.3 Treatment exposure</h3>
+    <p>Treatment exposure was defined at the first diabetes medication after T2DM diagnosis (index date). During follow-up, 26.1% of patients switched medication class and 26.1% used multiple diabetes drug classes when switchers are included.</p>
+    <ul class="compact">
+      
+      <li>Exposure inferred from medication orders, not confirmed adherence.</li>
+      
+      <li>Treatment switching during follow-up may dilute intention-to-treat effects.</li>
+      
+      <li>Index-date assignment may misclassify patients who initiated non-metformin therapy before metformin in the same window.</li>
+      
+    </ul>
+
+    <h3>3.4 Clinical outcomes (Table 2)</h3>
+    <p>Unadjusted outcome rates for the primary composite were Metformin users: 37/49 events (75.5%; 8.9 per 100 patient-years); Other diabetes medication users: 18/20 events (90.0%; 11.6 per 100 patient-years).</p>
+    <table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Outcome</th>
+      <th>Treatment group</th>
+      <th>N patients</th>
+      <th>N events</th>
+      <th>Event rate (%)</th>
+      <th>Person-years</th>
+      <th>Events per 100 PY</th>
+      <th>Odds ratio</th>
+      <th>95% CI</th>
+      <th>P-value</th>
+      <th>Mean follow-up (years)</th>
+      <th>Median follow-up (years)</th>
+      <th>Median event-free days</th>
+      <th>Log-rank p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cardiovascular Event</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>13.0</td>
+      <td>26.5</td>
+      <td>414.7</td>
+      <td>3.13</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Cardiovascular Event</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>5.0</td>
+      <td>25.0</td>
+      <td>155.9</td>
+      <td>3.21</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Cardiovascular Event</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>18.0</td>
+      <td>26.1</td>
+      <td>570.6</td>
+      <td>3.15</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Diabetes Complication</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>16.0</td>
+      <td>32.7</td>
+      <td>414.7</td>
+      <td>3.86</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Diabetes Complication</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>10.0</td>
+      <td>50.0</td>
+      <td>155.9</td>
+      <td>6.42</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Diabetes Complication</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>26.0</td>
+      <td>37.7</td>
+      <td>570.6</td>
+      <td>4.56</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Hospitalization Event</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>33.0</td>
+      <td>67.3</td>
+      <td>414.7</td>
+      <td>7.96</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Hospitalization Event</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>17.0</td>
+      <td>85.0</td>
+      <td>155.9</td>
+      <td>10.91</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Hospitalization Event</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>50.0</td>
+      <td>72.5</td>
+      <td>570.6</td>
+      <td>8.76</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Primary Composite Event</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>37.0</td>
+      <td>75.5</td>
+      <td>414.7</td>
+      <td>8.92</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Primary Composite Event</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>18.0</td>
+      <td>90.0</td>
+      <td>155.9</td>
+      <td>11.55</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Primary Composite Event</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>55.0</td>
+      <td>79.7</td>
+      <td>570.6</td>
+      <td>9.64</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Primary Composite Event (unadjusted OR)</td>
+      <td>Other vs Metformin</td>
+      <td>69</td>
+      <td>55.0</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>2.92</td>
+      <td>0.59–14.45</td>
+      <td>0.1893</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Diabetes Complication (unadjusted OR)</td>
+      <td>Other vs Metformin</td>
+      <td>69</td>
+      <td>26.0</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>2.06</td>
+      <td>0.71–5.96</td>
+      <td>0.1810</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Cardiovascular Event (unadjusted OR)</td>
+      <td>Other vs Metformin</td>
+      <td>69</td>
+      <td>18.0</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>0.92</td>
+      <td>0.28–3.05</td>
+      <td>0.8955</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Hospitalization Event (unadjusted OR)</td>
+      <td>Other vs Metformin</td>
+      <td>69</td>
+      <td>50.0</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>2.75</td>
+      <td>0.70–10.76</td>
+      <td>0.1467</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Follow-up duration (years)</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>8.46</td>
+      <td>10.00</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Follow-up duration (years)</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>7.79</td>
+      <td>10.02</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Kaplan-Meier (primary composite)</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>37.0</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>945.0</td>
+      <td>0.0101</td>
+    </tr>
+    <tr>
+      <td>Kaplan-Meier (primary composite)</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>18.0</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>459.0</td>
+      <td>0.0101</td>
+    </tr>
+  </tbody>
+</table>
+    <p><strong>Kaplan-Meier analysis (primary composite):</strong> Kaplan-Meier curves for the primary composite differed by treatment group (log-rank p = 0.0101). Median event-free survival was longer in the metformin group.</p>
+
+    <h3>3.5 Causal treatment effects (Table 3)</h3>
+    <p>Table 3 summarizes causal effect estimates from propensity score matching (Step 6), IPTW and regression adjustment (Step 7). Effect measures include odds ratios (Other vs Metformin), risk differences (Metformin − Other), ATE, and ATT.</p>
+    <table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Analysis method</th>
+      <th>Effect measure</th>
+      <th>Estimate</th>
+      <th>95% CI</th>
+      <th>P-value</th>
+      <th>ATE (risk diff.)</th>
+      <th>ATT (risk diff.)</th>
+      <th>Odds ratio (Other vs Metformin)</th>
+      <th>N</th>
+      <th>Matched pairs</th>
+      <th>OR 95% CI</th>
+      <th>Weighted risk Metformin</th>
+      <th>Weighted risk Other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Propensity score matching (1:1 NN)</td>
+      <td>Odds ratio (Other vs Metformin)</td>
+      <td>0.2940</td>
+      <td>0.01–8.366</td>
+      <td>0.4737</td>
+      <td>0.2940</td>
+      <td>—</td>
+      <td>0.294</td>
+      <td>16</td>
+      <td>8.0</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Regression adjustment</td>
+      <td>Odds ratio (Other vs Metformin)</td>
+      <td>1.1950</td>
+      <td>0.101–14.153</td>
+      <td>0.8878</td>
+      <td>—</td>
+      <td>—</td>
+      <td>1.195</td>
+      <td>69</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Inverse probability of treatment weighting (IPTW)</td>
+      <td>ATE — risk difference (Metformin − Other)</td>
+      <td>0.1058</td>
+      <td>—</td>
+      <td>0.3384</td>
+      <td>0.1058</td>
+      <td>—</td>
+      <td>0.576</td>
+      <td>69</td>
+      <td>—</td>
+      <td>0.186–1.781</td>
+      <td>0.7896</td>
+      <td>0.6837</td>
+    </tr>
+    <tr>
+      <td>IPTW — average treatment effect on the treated (ATT)</td>
+      <td>ATT — risk difference (Metformin − Other)</td>
+      <td>0.1407</td>
+      <td>—</td>
+      <td>0.2090</td>
+      <td>—</td>
+      <td>0.1407</td>
+      <td>0.517</td>
+      <td>69</td>
+      <td>—</td>
+      <td>0.184–1.447</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>Doubly robust (AIPW)</td>
+      <td>Average treatment effect (risk difference)</td>
+      <td>0.1955</td>
+      <td>—</td>
+      <td>0.2399</td>
+      <td>—</td>
+      <td>—</td>
+      <td>0.236</td>
+      <td>69</td>
+      <td>—</td>
+      <td>0.021–2.626</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="key-finding">
+      <strong>Statistical interpretation.</strong> After adjustment for measured baseline characteristics, treatment group differences in the primary composite outcome were attenuated relative to unadjusted analyses. Multivariable logistic regression yielded an adjusted odds ratio of 1.195 (Other vs Metformin), with wide confidence intervals reflecting the modest sample size. Propensity score matching on 8 pairs produced unstable effect estimates due to small matched sample size and outcome separation. The estimated treatment effect represents the association between treatment exposure and clinical outcomes under causal assumptions (exchangeability, positivity, consistency), not a definitive causal claim given synthetic data and residual confounding.
+    </div>
+
+    <h2>4. Discussion</h2>
+    <p>This synthetic RWE study demonstrates a full pharmaceutical observational analysis pipeline from data quality through evidence generation. Unadjusted analyses suggested higher composite event rates among patients initiating non-metformin therapy, consistent with confounding by indication (older, more comorbid patients). After multivariable and propensity-based adjustment, effect estimates moved toward the null with wide uncertainty intervals.</p>
+
+    <h2>5. Limitations</h2>
+    <ul class="compact">
+      
+      <li>Synthetic data source (Synthea): results may not reflect real-world treatment patterns, coding practices, or clinical heterogeneity in live EHR/claims databases.</li>
+      
+      <li>Residual confounding: unmeasured disease severity (e.g., HbA1c, insulin resistance) may persist despite multivariable and propensity score adjustment.</li>
+      
+      <li>Missing variables: laboratory values, medication adherence, and lifestyle factors were not fully captured in the synthetic dataset.</li>
+      
+      <li>Medication adherence uncertainty: pharmacy fill data proxy exposure but do not confirm ingestion.</li>
+      
+      <li>Small sample size (N=69) limits statistical power, subgroup analyses, and precision of effect estimates.</li>
+      
+      <li>Generalizability: findings from a single synthetic cohort cannot be extrapolated to specific healthcare systems or patient populations without external validation.</li>
+      
+    </ul>
+
+    <h2>6. Conclusion</h2>
+    <p>Results estimate the causal effect under assumptions of no unmeasured confounding, correct model specification, and adequate overlap of treatment groups. While directionally consistent with a protective association for metformin, the small synthetic cohort precludes definitive clinical conclusions. External validation in real-world data is required before informing treatment decisions.</p>
+
+    <div class="footer">
+      Synthetic RWE Diabetes Treatment Study | Steps 1–8 Evidence Generation Pipeline<br>
+      This report is intended for methodological demonstration using Synthea synthetic data.
+    </div>
+  </div>
+</body>
+</html>

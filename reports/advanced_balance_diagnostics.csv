@@ -1,0 +1,22 @@
+covariate,analysis_stage,smd,balanced
+age,Before weighting,-1.036,False
+female,Before weighting,-0.322,False
+hypertension,Before weighting,-0.097,True
+cardiovascular_disease,Before weighting,-0.587,False
+obesity,Before weighting,0.902,False
+hyperlipidemia,Before weighting,-0.094,True
+chronic_kidney_disease,Before weighting,-1.716,False
+age,After IPTW ATE,-1.036,False
+female,After IPTW ATE,-0.322,False
+hypertension,After IPTW ATE,-0.097,True
+cardiovascular_disease,After IPTW ATE,-0.587,False
+obesity,After IPTW ATE,0.902,False
+hyperlipidemia,After IPTW ATE,-0.094,True
+chronic_kidney_disease,After IPTW ATE,-1.716,False
+age,After IPTW ATT,-1.036,False
+female,After IPTW ATT,-0.322,False
+hypertension,After IPTW ATT,-0.097,True
+cardiovascular_disease,After IPTW ATT,-0.587,False
+obesity,After IPTW ATT,0.902,False
+hyperlipidemia,After IPTW ATT,-0.094,True
+chronic_kidney_disease,After IPTW ATT,-1.716,False

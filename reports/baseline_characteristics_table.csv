@@ -1,0 +1,20 @@
+section,characteristic,Metformin users,Other diabetes medication users,overall,smd,balanced,primary_test,p_value,t_p_value,mwu_p_value,chi2_statistic,significance,variable_type
+Demographics,N,49,20,69,0.0,True,—,,,,,,count
+Demographics,"Age, years — mean (SD)",54.8 (11.8),69.4 (16.1),59.1 (14.7),-1.036,False,Mann-Whitney U,0.0003,0.001,0.0003,,***,continuous
+Demographics,"Age, years — median (IQR)",51.2 (47.6–63.2),66.1 (56.1–81.5),55.6 (49.4–66.8),,,—,,,,,,continuous
+Demographics,"Age, years — min / max",36.3 / 95.9,44.6 / 99.8,36.3 / 99.8,,,—,,,,,,continuous
+Demographics,  Gender: F,24 (49.0%),13 (65.0%),37 (53.6%),-0.322,False,Chi-square,0.3448,,,0.892,NS,categorical
+Demographics,  Gender: M,25 (51.0%),7 (35.0%),32 (46.4%),0.322,False,—,,,,,,categorical
+Demographics,  Race: asian,1 (2.0%),0 (0.0%),1 (1.4%),0.202,False,Chi-square,0.4631,,,3.598,NS,categorical
+Demographics,  Race: black,2 (4.1%),3 (15.0%),5 (7.2%),-0.37,False,—,,,,,,categorical
+Demographics,  Race: hawaiian,1 (2.0%),0 (0.0%),1 (1.4%),0.202,False,—,,,,,,categorical
+Demographics,  Race: native,1 (2.0%),0 (0.0%),1 (1.4%),0.202,False,—,,,,,,categorical
+Demographics,  Race: white,44 (89.8%),17 (85.0%),61 (88.4%),0.142,False,—,,,,,,categorical
+Clinical characteristics,Hypertension,27 (55.1%),12 (60.0%),39 (56.5%),-0.097,True,Chi-square / Fisher,0.9166,,,0.011,NS,binary
+Clinical characteristics,Hyperlipidemia,8 (16.3%),4 (20.0%),12 (17.4%),-0.094,True,Chi-square / Fisher,0.7343,,,0.0,NS,binary
+Clinical characteristics,Obesity,49 (100.0%),14 (70.0%),63 (91.3%),0.902,False,Chi-square / Fisher,0.0003,,,12.543,***,binary
+Clinical characteristics,Cardiovascular disease,11 (22.4%),10 (50.0%),21 (30.4%),-0.587,False,Chi-square / Fisher,0.049,,,3.874,*,binary
+Clinical characteristics,Chronic kidney disease,7 (14.3%),13 (65.0%),20 (29.0%),-1.188,False,Chi-square / Fisher,0.0001,,,15.368,***,binary
+Clinical characteristics,Diabetic nephropathy,7 (14.3%),16 (80.0%),23 (33.3%),-1.716,False,Chi-square / Fisher,0.0,,,24.722,***,binary
+Clinical characteristics,Diabetic neuropathy,5 (10.2%),5 (25.0%),10 (14.5%),-0.388,False,Chi-square / Fisher,0.1399,,,1.457,NS,binary
+Clinical characteristics,Diabetic retinopathy,1 (2.0%),1 (5.0%),2 (2.9%),-0.158,False,Chi-square / Fisher,0.4987,,,0.0,NS,binary

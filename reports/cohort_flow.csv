@@ -1,0 +1,7 @@
+step,n,description
+1_all_patients,1135,All patients in patients.csv
+2_t2dm_diagnosis,96,Patients with Type 2 Diabetes Mellitus (description-based)
+3_post_diagnosis_medication,69,T2DM patients with diabetes medication exposure after diagnosis
+4_has_encounter,69,Patients with at least one healthcare encounter
+5_adult_at_index,69,Adult patients (age >= 18) at index date
+6_final_study_population,69,Final analytic cohort

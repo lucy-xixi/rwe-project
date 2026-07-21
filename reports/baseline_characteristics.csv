@@ -1,0 +1,29 @@
+category,variable,level,n,percent,summary_stat
+Cohort size,Total patients,All,69,100.0,count
+Treatment group,treatment_group,Metformin users,49,71.0,count
+Treatment group,treatment_group,Other diabetes medication users,20,29.0,count
+Age (years),age,mean,69,,59.1
+Age (years),age,std,69,,14.7
+Age (years),age,median,69,,55.6
+Age (years),age,Q1,69,,49.4
+Age (years),age,Q3,69,,66.8
+Age (years),age,min,69,,36.3
+Age (years),age,max,69,,99.8
+Gender,gender,F,37,53.6,count
+Gender,gender,M,32,46.4,count
+Race,race,white,61,88.4,count
+Race,race,black,5,7.2,count
+Race,race,hawaiian,1,1.4,count
+Race,race,asian,1,1.4,count
+Race,race,native,1,1.4,count
+Comorbidity (baseline),chronic_kidney_disease,present,20,29.0,count
+Comorbidity (baseline),copd,present,0,0.0,count
+Comorbidity (baseline),depression,present,0,0.0,count
+Comorbidity (baseline),diabetic_nephropathy,present,23,33.3,count
+Comorbidity (baseline),diabetic_neuropathy,present,10,14.5,count
+Comorbidity (baseline),diabetic_retinopathy,present,2,2.9,count
+Comorbidity (baseline),heart_failure,present,1,1.4,count
+Comorbidity (baseline),hyperlipidemia,present,12,17.4,count
+Comorbidity (baseline),hypertension,present,39,56.5,count
+Comorbidity (baseline),ischemic_heart_disease,present,20,29.0,count
+Comorbidity (baseline),obesity,present,63,91.3,count

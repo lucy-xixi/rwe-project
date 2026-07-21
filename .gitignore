@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large raw EHR exports (~780 MB) — see data/synthea_csv/README.md to obtain data
+data/synthea_csv/*.csv
+
+# Optional: ignore regenerated intermediates (keep key deliverables in reports/)
+# Uncomment if you prefer a minimal repo:
+# reports/*.csv

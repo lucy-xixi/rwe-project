@@ -1,0 +1,6 @@
+subgroup_variable,subgroup_level,n,n_metformin,n_other,odds_ratio_other_vs_metformin,ci_lower,ci_upper,p_value,risk_metformin,risk_other
+Age group,Age < 65,48,39,9,0.306,0.015,6.103,0.438,0.718,0.889
+Age group,Age >= 65,21,10,11,1.17961032778397e+16,,,,0.9,0.909
+Gender,F,37,24,13,0.0,,,,0.708,0.923
+Gender,M,32,25,7,5716015243.929,,,,0.8,0.857
+Comorbidity burden,Moderate (2-3),44,31,13,941401804.704,,,,0.71,0.923

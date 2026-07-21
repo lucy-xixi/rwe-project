@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Baseline Characteristics Report — RWE Diabetes Study</title>
+  <style>
+    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f4f7fb; color: #1f2937; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 28px; border-radius: 12px; margin-bottom: 24px; }
+    section { background: #fff; border: 1px solid #dbe3ef; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #1d4ed8; margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { border-bottom: 1px solid #dbe3ef; padding: 8px 10px; text-align: left; }
+    th { background: #eef2ff; }
+    figure { margin: 16px 0; text-align: center; }
+    img { max-width: 100%; border: 1px solid #dbe3ef; border-radius: 8px; }
+    figcaption { color: #6b7280; font-size: 0.85rem; margin-top: 6px; }
+    .note { color: #6b7280; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Baseline Characteristics Report</h1>
+      <p>Step 3 — Real-World Evidence Pipeline | Metformin vs Other Diabetes Medications</p>
+      <p>Study population: Synthea synthetic EHR | N = 69</p>
+    </header>
+
+    <section>
+      <h2>Study Population Description</h2>
+      
+    <p>The analytic cohort comprised <strong>69</strong> adult patients with Type 2 Diabetes
+    initiating pharmacotherapy after diagnosis. Treatment Group A (Metformin users, n=49)
+    and Treatment Group B (Other diabetes medication users, n=20) were compared on baseline
+    demographics and clinical characteristics prior to outcome analysis.</p>
+    <p>Continuous variables are summarized as mean (SD) and median (IQR). Categorical variables
+    are reported as n (%). Between-group comparisons used Welch's t-test or Mann-Whitney U test
+    (when normality assumptions were not met) for continuous variables, and chi-square or Fisher's
+    exact test for categorical variables.</p>
+    <p>Standardized mean differences (SMD) quantify baseline imbalance. Of 17 evaluated
+    variables, 3 had |SMD| &lt; 0.1 indicating acceptable balance.
+    Variables with |SMD| ≥ 0.1 suggest residual confounding that should be
+    addressed in propensity score modeling (Step 4).</p>
+    <p><strong>Imbalanced variables (|SMD| ≥ 0.1):</strong> Age, years — mean (SD),   Gender: F,   Gender: M,   Race: asian,   Race: black,   Race: hawaiian,   Race: native,   Race: white.</p>
+    </section>
+
+    <section>
+      <h2>Table 1 — Demographic Characteristics</h2>
+      <p class="note">Treatment A: Metformin users | Treatment B: Other diabetes medication users</p>
+      <p class="note">Significance: * p&lt;0.05, ** p&lt;0.01, *** p&lt;0.001, NS = not significant</p>
+      <table><thead><tr><th>characteristic</th><th>Metformin users</th><th>Other diabetes medication users</th><th>overall</th><th>smd</th><th>p_value</th><th>significance</th><th>primary_test</th></tr></thead><tbody><tr><td>N</td><td>49</td><td>20</td><td>69</td><td>0.0</td><td>nan</td><td></td><td>—</td></tr><tr><td>Age, years — mean (SD)</td><td>54.8 (11.8)</td><td>69.4 (16.1)</td><td>59.1 (14.7)</td><td>-1.036</td><td>0.0003</td><td>***</td><td>Mann-Whitney U</td></tr><tr><td>Age, years — median (IQR)</td><td>51.2 (47.6–63.2)</td><td>66.1 (56.1–81.5)</td><td>55.6 (49.4–66.8)</td><td>nan</td><td>nan</td><td></td><td>—</td></tr><tr><td>Age, years — min / max</td><td>36.3 / 95.9</td><td>44.6 / 99.8</td><td>36.3 / 99.8</td><td>nan</td><td>nan</td><td></td><td>—</td></tr><tr><td>  Gender: F</td><td>24 (49.0%)</td><td>13 (65.0%)</td><td>37 (53.6%)</td><td>-0.322</td><td>0.3448</td><td>NS</td><td>Chi-square</td></tr><tr><td>  Gender: M</td><td>25 (51.0%)</td><td>7 (35.0%)</td><td>32 (46.4%)</td><td>0.322</td><td>nan</td><td></td><td>—</td></tr><tr><td>  Race: asian</td><td>1 (2.0%)</td><td>0 (0.0%)</td><td>1 (1.4%)</td><td>0.202</td><td>0.4631</td><td>NS</td><td>Chi-square</td></tr><tr><td>  Race: black</td><td>2 (4.1%)</td><td>3 (15.0%)</td><td>5 (7.2%)</td><td>-0.37</td><td>nan</td><td></td><td>—</td></tr><tr><td>  Race: hawaiian</td><td>1 (2.0%)</td><td>0 (0.0%)</td><td>1 (1.4%)</td><td>0.202</td><td>nan</td><td></td><td>—</td></tr><tr><td>  Race: native</td><td>1 (2.0%)</td><td>0 (0.0%)</td><td>1 (1.4%)</td><td>0.202</td><td>nan</td><td></td><td>—</td></tr><tr><td>  Race: white</td><td>44 (89.8%)</td><td>17 (85.0%)</td><td>61 (88.4%)</td><td>0.142</td><td>nan</td><td></td><td>—</td></tr></tbody></table>
+    </section>
+
+    <section>
+      <h2>Table 1 — Clinical Characteristics (Baseline Comorbidities)</h2>
+      <p class="note">Comorbidities ascertained from conditions recorded at or before index_date.</p>
+      <table><thead><tr><th>characteristic</th><th>Metformin users</th><th>Other diabetes medication users</th><th>overall</th><th>smd</th><th>p_value</th><th>significance</th><th>primary_test</th></tr></thead><tbody><tr><td>Hypertension</td><td>27 (55.1%)</td><td>12 (60.0%)</td><td>39 (56.5%)</td><td>-0.097</td><td>0.9166</td><td>NS</td><td>Chi-square / Fisher</td></tr><tr><td>Hyperlipidemia</td><td>8 (16.3%)</td><td>4 (20.0%)</td><td>12 (17.4%)</td><td>-0.094</td><td>0.7343</td><td>NS</td><td>Chi-square / Fisher</td></tr><tr><td>Obesity</td><td>49 (100.0%)</td><td>14 (70.0%)</td><td>63 (91.3%)</td><td>0.902</td><td>0.0003</td><td>***</td><td>Chi-square / Fisher</td></tr><tr><td>Cardiovascular disease</td><td>11 (22.4%)</td><td>10 (50.0%)</td><td>21 (30.4%)</td><td>-0.587</td><td>0.049</td><td>*</td><td>Chi-square / Fisher</td></tr><tr><td>Chronic kidney disease</td><td>7 (14.3%)</td><td>13 (65.0%)</td><td>20 (29.0%)</td><td>-1.188</td><td>0.0001</td><td>***</td><td>Chi-square / Fisher</td></tr><tr><td>Diabetic nephropathy</td><td>7 (14.3%)</td><td>16 (80.0%)</td><td>23 (33.3%)</td><td>-1.716</td><td>0.0</td><td>***</td><td>Chi-square / Fisher</td></tr><tr><td>Diabetic neuropathy</td><td>5 (10.2%)</td><td>5 (25.0%)</td><td>10 (14.5%)</td><td>-0.388</td><td>0.1399</td><td>NS</td><td>Chi-square / Fisher</td></tr><tr><td>Diabetic retinopathy</td><td>1 (2.0%)</td><td>1 (5.0%)</td><td>2 (2.9%)</td><td>-0.158</td><td>0.4987</td><td>NS</td><td>Chi-square / Fisher</td></tr></tbody></table>
+    </section>
+
+    <section>
+      <h2>Visualizations</h2>
+      <figure><img src="figures/age_distribution.png" alt="age_distribution.png"><figcaption>age_distribution.png</figcaption></figure>
+<figure><img src="figures/treatment_group_size.png" alt="treatment_group_size.png"><figcaption>treatment_group_size.png</figcaption></figure>
+<figure><img src="figures/baseline_smd_love_plot.png" alt="baseline_smd_love_plot.png"><figcaption>baseline_smd_love_plot.png</figcaption></figure>
+
+    </section>
+
+    <section>
+      <h2>SMD Balance Assessment</h2>
+      <p>|SMD| &lt; 0.1 indicates good balance per pharmacoepidemiologic convention.
+      See Love plot for graphical assessment.</p>
+    </section>
+  </div>
+</body>
+</html>

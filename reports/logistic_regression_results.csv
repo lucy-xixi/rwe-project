@@ -1,0 +1,5 @@
+outcome_type,odds_ratio,ci_lower,ci_upper,p_value,n,n_events,model
+primary_composite_event,2.919,0.59,14.449,0.1893,69,55,Logistic regression (unadjusted)
+diabetes_complication,2.062,0.714,5.956,0.181,69,26,Logistic regression (unadjusted)
+cardiovascular_event,0.923,0.28,3.048,0.8955,69,18,Logistic regression (unadjusted)
+hospitalization_event,2.747,0.702,10.757,0.1467,69,50,Logistic regression (unadjusted)

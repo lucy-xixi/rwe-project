@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Outcome Analysis Report — RWE Diabetes Study</title>
+  <style>
+    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f4f7fb; color: #1f2937; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 28px; border-radius: 12px; margin-bottom: 24px; }
+    section { background: #fff; border: 1px solid #dbe3ef; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #1d4ed8; margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { border-bottom: 1px solid #dbe3ef; padding: 8px 10px; text-align: left; }
+    th { background: #eef2ff; }
+    figure { text-align: center; margin: 16px 0; }
+    img { max-width: 100%; border: 1px solid #dbe3ef; border-radius: 8px; }
+    .warning { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Outcome Analysis Report</h1>
+      <p>Step 5 — Synthetic RWE Diabetes Treatment Study</p>
+      <p>Metformin users (n=49) vs Other diabetes medication users (n=20)</p>
+    </header>
+
+    <section>
+      <h2>1. Study Population</h2>
+      <p>Adult T2DM patients from Step 2 cohort assigned to metformin or other diabetes
+      medication at index date. Total analytic N = 69.</p>
+    </section>
+
+    <section>
+      <h2>2. Outcome Definitions</h2>
+      <ul>
+        <li><strong>Primary composite:</strong> First post-index diabetes complication,
+        cardiovascular event, or hospitalization/ED visit</li>
+        <li><strong>Diabetes complication:</strong> Nephropathy, neuropathy, retinopathy,
+        or other T2DM sequelae (conditions.csv)</li>
+        <li><strong>Cardiovascular event:</strong> IHD, heart failure, stroke (conditions.csv)</li>
+        <li><strong>Hospitalization event:</strong> Inpatient or emergency encounter (encounters.csv)</li>
+        <li><strong>Secondary:</strong> Encounter count, medication change, disease progression</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Follow-Up Description</h2>
+      <p>Follow-up begins at index_date (first diabetes medication) and ends at the latest
+      available clinical record (conditions, encounters, observations, medications) or death.</p>
+      <p>Mean follow-up: 3020 days (99.2 months)</p>
+    </section>
+
+    <section>
+      <h2>4. Event Rates</h2>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>outcome_type</th>
+      <th>treatment_group</th>
+      <th>n_patients</th>
+      <th>n_events</th>
+      <th>event_percentage</th>
+      <th>person_years</th>
+      <th>events_per_100_patient_years</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cardiovascular_event</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>13</td>
+      <td>26.5</td>
+      <td>414.74</td>
+      <td>3.13</td>
+    </tr>
+    <tr>
+      <td>cardiovascular_event</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>5</td>
+      <td>25.0</td>
+      <td>155.86</td>
+      <td>3.21</td>
+    </tr>
+    <tr>
+      <td>cardiovascular_event</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>18</td>
+      <td>26.1</td>
+      <td>570.60</td>
+      <td>3.15</td>
+    </tr>
+    <tr>
+      <td>diabetes_complication</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>16</td>
+      <td>32.7</td>
+      <td>414.74</td>
+      <td>3.86</td>
+    </tr>
+    <tr>
+      <td>diabetes_complication</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>10</td>
+      <td>50.0</td>
+      <td>155.86</td>
+      <td>6.42</td>
+    </tr>
+    <tr>
+      <td>diabetes_complication</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>26</td>
+      <td>37.7</td>
+      <td>570.60</td>
+      <td>4.56</td>
+    </tr>
+    <tr>
+      <td>diabetic_nephropathy</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>11</td>
+      <td>22.4</td>
+      <td>414.74</td>
+      <td>2.65</td>
+    </tr>
+    <tr>
+      <td>diabetic_nephropathy</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>10</td>
+      <td>50.0</td>
+      <td>155.86</td>
+      <td>6.42</td>
+    </tr>
+    <tr>
+      <td>diabetic_nephropathy</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>21</td>
+      <td>30.4</td>
+      <td>570.60</td>
+      <td>3.68</td>
+    </tr>
+    <tr>
+      <td>diabetic_neuropathy</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>3</td>
+      <td>6.1</td>
+      <td>414.74</td>
+      <td>0.72</td>
+    </tr>
+    <tr>
+      <td>diabetic_neuropathy</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>155.86</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>diabetic_neuropathy</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>3</td>
+      <td>4.3</td>
+      <td>570.60</td>
+      <td>0.53</td>
+    </tr>
+    <tr>
+      <td>diabetic_retinopathy</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>1</td>
+      <td>2.0</td>
+      <td>414.74</td>
+      <td>0.24</td>
+    </tr>
+    <tr>
+      <td>diabetic_retinopathy</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>155.86</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>diabetic_retinopathy</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>1</td>
+      <td>1.4</td>
+      <td>570.60</td>
+      <td>0.18</td>
+    </tr>
+    <tr>
+      <td>hospitalization_event</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>33</td>
+      <td>67.3</td>
+      <td>414.74</td>
+      <td>7.96</td>
+    </tr>
+    <tr>
+      <td>hospitalization_event</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>17</td>
+      <td>85.0</td>
+      <td>155.86</td>
+      <td>10.91</td>
+    </tr>
+    <tr>
+      <td>hospitalization_event</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>50</td>
+      <td>72.5</td>
+      <td>570.60</td>
+      <td>8.76</td>
+    </tr>
+    <tr>
+      <td>primary_composite_event</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>37</td>
+      <td>75.5</td>
+      <td>414.74</td>
+      <td>8.92</td>
+    </tr>
+    <tr>
+      <td>primary_composite_event</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>18</td>
+      <td>90.0</td>
+      <td>155.86</td>
+      <td>11.55</td>
+    </tr>
+    <tr>
+      <td>primary_composite_event</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>55</td>
+      <td>79.7</td>
+      <td>570.60</td>
+      <td>9.64</td>
+    </tr>
+    <tr>
+      <td>medication_change</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>48</td>
+      <td>98.0</td>
+      <td>414.74</td>
+      <td>11.57</td>
+    </tr>
+    <tr>
+      <td>medication_change</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>16</td>
+      <td>80.0</td>
+      <td>155.86</td>
+      <td>10.27</td>
+    </tr>
+    <tr>
+      <td>medication_change</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>64</td>
+      <td>92.8</td>
+      <td>570.60</td>
+      <td>11.22</td>
+    </tr>
+    <tr>
+      <td>disease_progression</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>4</td>
+      <td>8.2</td>
+      <td>414.74</td>
+      <td>0.96</td>
+    </tr>
+    <tr>
+      <td>disease_progression</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>155.86</td>
+      <td>0.64</td>
+    </tr>
+    <tr>
+      <td>disease_progression</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>5</td>
+      <td>7.2</td>
+      <td>570.60</td>
+      <td>0.88</td>
+    </tr>
+    <tr>
+      <td>high_encounter_utilization</td>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>34</td>
+      <td>69.4</td>
+      <td>414.74</td>
+      <td>8.20</td>
+    </tr>
+    <tr>
+      <td>high_encounter_utilization</td>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>16</td>
+      <td>80.0</td>
+      <td>155.86</td>
+      <td>10.27</td>
+    </tr>
+    <tr>
+      <td>high_encounter_utilization</td>
+      <td>Overall</td>
+      <td>69</td>
+      <td>50</td>
+      <td>72.5</td>
+      <td>570.60</td>
+      <td>8.76</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>5. Time-to-Event Analysis (Kaplan-Meier)</h2>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>treatment_group</th>
+      <th>n</th>
+      <th>n_events</th>
+      <th>median_event_free_days</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Metformin users</td>
+      <td>49</td>
+      <td>37</td>
+      <td>945.0</td>
+    </tr>
+    <tr>
+      <td>Other diabetes medication users</td>
+      <td>20</td>
+      <td>18</td>
+      <td>459.0</td>
+    </tr>
+  </tbody>
+</table>
+      <p>Log-rank test: statistic = 6.614,
+      p = 0.0101</p>
+      <p>Median event-free time — Metformin: 945 days;
+      Other: 459 days</p>
+    </section>
+
+    <section>
+      <h2>6. Binary Outcome Analysis (Logistic Regression)</h2>
+      <p>Unadjusted model: Outcome ~ Treatment group (Other vs Metformin)</p>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>outcome_type</th>
+      <th>odds_ratio</th>
+      <th>ci_lower</th>
+      <th>ci_upper</th>
+      <th>p_value</th>
+      <th>n</th>
+      <th>n_events</th>
+      <th>model</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>primary_composite_event</td>
+      <td>2.919</td>
+      <td>0.590</td>
+      <td>14.449</td>
+      <td>0.1893</td>
+      <td>69</td>
+      <td>55</td>
+      <td>Logistic regression (unadjusted)</td>
+    </tr>
+    <tr>
+      <td>diabetes_complication</td>
+      <td>2.062</td>
+      <td>0.714</td>
+      <td>5.956</td>
+      <td>0.1810</td>
+      <td>69</td>
+      <td>26</td>
+      <td>Logistic regression (unadjusted)</td>
+    </tr>
+    <tr>
+      <td>cardiovascular_event</td>
+      <td>0.923</td>
+      <td>0.280</td>
+      <td>3.048</td>
+      <td>0.8955</td>
+      <td>69</td>
+      <td>18</td>
+      <td>Logistic regression (unadjusted)</td>
+    </tr>
+    <tr>
+      <td>hospitalization_event</td>
+      <td>2.747</td>
+      <td>0.702</td>
+      <td>10.757</td>
+      <td>0.1467</td>
+      <td>69</td>
+      <td>50</td>
+      <td>Logistic regression (unadjusted)</td>
+    </tr>
+  </tbody>
+</table>
+      <p><strong>Interpretation:</strong> These results represent unadjusted associations. Potential confounding factors (e.g., age, comorbidity burden) should be addressed using causal inference methods such as propensity score weighting or doubly robust estimation in subsequent analysis.</p>
+    </section>
+
+    <section>
+      <h2>7. Visualizations</h2>
+      <figure><img src="figures/outcome_incidence_by_group.png" alt="outcome_incidence_by_group.png"><figcaption>outcome_incidence_by_group.png</figcaption></figure><figure><img src="figures/kaplan_meier_primary_outcome.png" alt="kaplan_meier_primary_outcome.png"><figcaption>kaplan_meier_primary_outcome.png</figcaption></figure><figure><img src="figures/event_timeline.png" alt="event_timeline.png"><figcaption>event_timeline.png</figcaption></figure>
+    </section>
+
+    <section>
+      <h2>8. Limitations</h2>
+      <ul>
+        <li>Unadjusted comparisons may reflect confounding by indication (sicker patients more likely to receive insulin).</li>
+        <li>Synthea synthetic data has limited outcome diversity and follow-up patterns.</li>
+        <li>Condition-based outcomes depend on diagnosis coding completeness.</li>
+        <li>Hospitalization events include ED visits; severity is not stratified.</li>
+        <li>Competing risks (death) not modeled in Kaplan-Meier framework.</li>
+      </ul>
+      <div class="warning"><p><strong>Interpretation:</strong> These results represent unadjusted associations. Potential confounding factors (e.g., age, comorbidity burden) should be addressed using causal inference methods such as propensity score weighting or doubly robust estimation in subsequent analysis.</p></div>
+    </section>
+  </div>
+</body>
+</html>

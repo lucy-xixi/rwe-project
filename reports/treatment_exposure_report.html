@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Treatment Exposure Report — RWE Diabetes Study</title>
+  <style>
+    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f4f7fb; color: #1f2937; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 28px; border-radius: 12px; margin-bottom: 24px; }
+    section { background: #fff; border: 1px solid #dbe3ef; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #1d4ed8; margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { border-bottom: 1px solid #dbe3ef; padding: 8px 10px; text-align: left; }
+    th { background: #eef2ff; }
+    figure { text-align: center; margin: 16px 0; }
+    img { max-width: 100%; border: 1px solid #dbe3ef; border-radius: 8px; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Treatment Exposure Definition Report</h1>
+      <p>Step 4 — Synthetic RWE Diabetes Treatment Study</p>
+      <p>Study population N = 69</p>
+    </header>
+
+    <section>
+      <h2>Treatment Definition Rules</h2>
+      <p><strong>Group A (Metformin users):</strong> Index diabetes medication class = Metformin.</p>
+      <p><strong>Group B (Other diabetes medication users):</strong> Index medication is any other
+      glucose-lowering agent (insulin, GLP-1, sulfonylurea, etc.).</p>
+      <p><strong>Multiple medication users:</strong> Received both metformin and a non-metformin
+      diabetes medication during follow-up (descriptive category for exposure complexity).</p>
+      <p><strong>Index treatment date:</strong> First diabetes medication exposure date after T2DM
+      diagnosis (aligned with Step 2 index_date).</p>
+    </section>
+
+    <section>
+      <h2>Medication Classification Logic</h2>
+      <ul><li><strong>Metformin</strong>: pattern <code>(?i)metformin</code></li><li><strong>Insulin</strong>: pattern <code>(?i)insulin</code></li><li><strong>GLP-1 receptor agonist</strong>: pattern <code>(?i)liraglutide|semaglutide|exenatide|dulaglutide</code></li><li><strong>SGLT2 inhibitor</strong>: pattern <code>(?i)empagliflozin|dapagliflozin|canagliflozin</code></li><li><strong>DPP-4 inhibitor</strong>: pattern <code>(?i)sitagliptin|saxagliptin|linagliptin</code></li><li><strong>Sulfonylurea</strong>: pattern <code>(?i)glipizide|glyburide|glimepiride|glipizide</code></li><li><strong>Thiazolidinedione</strong>: pattern <code>(?i)pioglitazone|rosiglitazone</code></li><li><strong>Other antidiabetic</strong>: pattern <code>(?i)repaglinide|nateglinide</code></li></ul>
+      <p>Classification is applied to the <code>DESCRIPTION</code> field in medications.csv using
+      case-insensitive regular expression matching.</p>
+    </section>
+
+    <section>
+      <h2>Exposure Period Definition</h2>
+      <ul>
+        <li><strong>Baseline period:</strong> 365 days before treatment initiation
+        (baseline_start_date to treatment_start_date)</li>
+        <li><strong>Follow-up period:</strong> From treatment_start_date through followup_end_date
+        (minimum 730 days administratively, censored at death or last observed medication)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Treatment Group Summary</h2>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>treatment_group</th>
+      <th>n_patients</th>
+      <th>percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Metformin users</td>
+      <td>44</td>
+      <td>63.8</td>
+    </tr>
+    <tr>
+      <td>Other diabetes medication users</td>
+      <td>15</td>
+      <td>21.7</td>
+    </tr>
+    <tr>
+      <td>Multiple medication users</td>
+      <td>10</td>
+      <td>14.5</td>
+    </tr>
+    <tr>
+      <td>Metformin users (assigned at index)</td>
+      <td>49</td>
+      <td>71.0</td>
+    </tr>
+    <tr>
+      <td>Other diabetes medication users (assigned at index)</td>
+      <td>20</td>
+      <td>29.0</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>Index Medication Class Summary</h2>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>medication_class</th>
+      <th>n_patients</th>
+      <th>percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Metformin</td>
+      <td>46</td>
+      <td>66.7</td>
+    </tr>
+    <tr>
+      <td>Insulin</td>
+      <td>22</td>
+      <td>31.9</td>
+    </tr>
+    <tr>
+      <td>GLP-1 receptor agonist</td>
+      <td>1</td>
+      <td>1.4</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>Treatment Switching and Polypharmacy</h2>
+      <p>Patients with treatment switch: 18 (26.1%)</p>
+      <p>Patients with multiple medication classes: 18 (26.1%)</p>
+    </section>
+
+    <section>
+      <h2>Visualizations</h2>
+      <figure><img src="figures/treatment_group_distribution.png" alt="treatment_group_distribution.png"><figcaption>treatment_group_distribution.png</figcaption></figure><figure><img src="figures/medication_class_distribution.png" alt="medication_class_distribution.png"><figcaption>medication_class_distribution.png</figcaption></figure><figure><img src="figures/treatment_initiation_timeline.png" alt="treatment_initiation_timeline.png"><figcaption>treatment_initiation_timeline.png</figcaption></figure>
+    </section>
+
+    <section>
+      <h2>Exposure Limitations</h2>
+      <ul>
+        <li>Synthea synthetic data contains limited antidiabetic drug classes (primarily metformin and insulin).</li>
+        <li>Medication end dates (STOP) may be missing for ongoing prescriptions, affecting discontinuation detection.</li>
+        <li>Treatment switching is inferred from prescription records, not confirmed clinical decisions.</li>
+        <li>Over-the-counter glucose-lowering products are not captured in EHR medication tables.</li>
+        <li>Exposure definitions should be replicated when applying this pipeline to real-world claims/EHR data with NDC/RxNorm mapping.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

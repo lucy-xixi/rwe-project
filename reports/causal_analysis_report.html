@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Causal Inference Report — RWE Diabetes Study</title>
+  <style>
+    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f4f7fb; color: #1f2937; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 28px; border-radius: 12px; margin-bottom: 24px; }
+    section { background: #fff; border: 1px solid #dbe3ef; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #1d4ed8; margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { border-bottom: 1px solid #dbe3ef; padding: 8px 10px; text-align: left; }
+    th { background: #eef2ff; }
+    .warning { background: #fff7ed; border-left: 4px solid #ea580c; padding: 12px; margin: 12px 0; }
+    pre { background: #f3f4f6; padding: 12px; overflow-x: auto; font-size: 0.85rem; }
+    figure { text-align: center; margin: 16px 0; }
+    img { max-width: 100%; border: 1px solid #dbe3ef; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Causal Inference Analysis Report</h1>
+      <p>Step 6 — Propensity Score &amp; Treatment Effect Estimation</p>
+      <p>Metformin users vs Other diabetes medication users | N = 69</p>
+    </header>
+
+    <section>
+      <h2>1. Study Design</h2>
+      <p>Observational comparative effectiveness study using propensity score methods to
+      estimate the causal effect of metformin vs other diabetes medications on the composite
+      outcome of diabetes-related complications or hospitalization.</p>
+    </section>
+
+    <section>
+      <h2>2. Confounder Selection Rationale</h2>
+      <p>Baseline covariates measured at or before index_date (treatment initiation):</p>
+      <ul>
+        <li>Demographics: age, gender (female indicator)</li>
+        <li>Clinical: hypertension, cardiovascular disease, obesity, hyperlipidemia, chronic kidney disease</li>
+      </ul>
+      <p>These variables are established confounders of diabetes treatment selection and complication risk.</p>
+    </section>
+
+    <section>
+      <h2>3. Propensity Score Methodology</h2>
+      <p>Model: P(Treatment = Metformin | Covariates) via multivariable logistic regression
+      (statsmodels GLM, robust SE). Matching: 1:1 nearest neighbor on logit PS with caliper
+      0.2 × SD(logit PS).</p>
+      <pre>                  Generalized Linear Model Regression Results                  
+===============================================================================
+Dep. Variable:     treatment_metformin   No. Observations:                   69
+Model:                             GLM   Df Residuals:                       61
+Model Family:                 Binomial   Df Model:                            7
+Link Function:                   Logit   Scale:                          1.0000
+Method:                           IRLS   Log-Likelihood:                -22.279
+Date:                 Tue, 21 Jul 2026   Deviance:                       44.558
+Time:                         11:13:55   Pearson chi2:                     75.6
+No. Iterations:                     21   Pseudo R-squ. (CS):             0.4278
+Covariance Type:                   HC1                                         
+==========================================================================================
+                             coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------------------
+const                    -20.6715      2.553     -8.098      0.000     -25.675     -15.668
+age                       -0.0085      0.036     -0.236      0.813      -0.079       0.062
+female                     0.1612      0.779      0.207      0.836      -1.365       1.688
+hypertension              -0.4004      0.773     -0.518      0.604      -1.915       1.114
+cardiovascular_disease     0.6832      1.157      0.590      0.555      -1.585       2.951
+obesity                   24.1677      1.906     12.679      0.000      20.432      27.904
+hyperlipidemia            -1.1901      1.339     -0.889      0.374      -3.814       1.433
+chronic_kidney_disease    -3.4850      1.377     -2.530      0.011      -6.185      -0.785
+==========================================================================================</pre>
+    </section>
+
+    <section>
+      <h2>4. Matching Results</h2>
+      <p>Matched pairs: 8 (16 patients in matched cohort)</p>
+    </section>
+
+    <section>
+      <h2>5. Balance Assessment</h2>
+      <p>|SMD| &lt; 0.1 indicates acceptable balance.
+      Post-matching balanced covariates: 64.3%</p>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>covariate</th>
+      <th>analysis_stage</th>
+      <th>smd</th>
+      <th>balanced</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>age</td>
+      <td>Before matching</td>
+      <td>-1.036</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>female</td>
+      <td>Before matching</td>
+      <td>-0.322</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>hypertension</td>
+      <td>Before matching</td>
+      <td>-0.097</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>cardiovascular_disease</td>
+      <td>Before matching</td>
+      <td>-0.587</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>obesity</td>
+      <td>Before matching</td>
+      <td>0.902</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>hyperlipidemia</td>
+      <td>Before matching</td>
+      <td>-0.094</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>chronic_kidney_disease</td>
+      <td>Before matching</td>
+      <td>-1.716</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>age</td>
+      <td>After matching</td>
+      <td>0.297</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>female</td>
+      <td>After matching</td>
+      <td>0.764</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>hypertension</td>
+      <td>After matching</td>
+      <td>0.000</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>cardiovascular_disease</td>
+      <td>After matching</td>
+      <td>0.000</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>obesity</td>
+      <td>After matching</td>
+      <td>0.000</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>hyperlipidemia</td>
+      <td>After matching</td>
+      <td>0.000</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>chronic_kidney_disease</td>
+      <td>After matching</td>
+      <td>0.000</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>age</td>
+      <td>After IPTW</td>
+      <td>-0.523</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>female</td>
+      <td>After IPTW</td>
+      <td>0.008</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>hypertension</td>
+      <td>After IPTW</td>
+      <td>-0.016</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>cardiovascular_disease</td>
+      <td>After IPTW</td>
+      <td>-0.535</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>obesity</td>
+      <td>After IPTW</td>
+      <td>0.399</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>hyperlipidemia</td>
+      <td>After IPTW</td>
+      <td>0.020</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>chronic_kidney_disease</td>
+      <td>After IPTW</td>
+      <td>-0.011</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>6. Treatment Effect Estimation</h2>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>method</th>
+      <th>effect_measure</th>
+      <th>estimate</th>
+      <th>ci_lower</th>
+      <th>ci_upper</th>
+      <th>p_value</th>
+      <th>n</th>
+      <th>n_pairs</th>
+      <th>risk_metformin</th>
+      <th>risk_other</th>
+      <th>iptw_or_other_vs_metformin</th>
+      <th>iptw_or_ci_lower</th>
+      <th>iptw_or_ci_upper</th>
+      <th>risk_metformin_weighted</th>
+      <th>risk_other_weighted</th>
+      <th>n_events</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PSM logistic regression (matched cohort)</td>
+      <td>Odds ratio (Other vs Metformin)</td>
+      <td>0.2940</td>
+      <td>0.0100</td>
+      <td>8.3660</td>
+      <td>0.4737</td>
+      <td>16</td>
+      <td>8.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Risk difference (matched cohort)</td>
+      <td>Risk difference (Metformin - Other)</td>
+      <td>0.1250</td>
+      <td>-0.1042</td>
+      <td>0.3542</td>
+      <td>NaN</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>1.0000</td>
+      <td>0.875</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Risk difference (unadjusted)</td>
+      <td>Risk difference (Metformin - Other)</td>
+      <td>-0.1449</td>
+      <td>-0.3232</td>
+      <td>0.0334</td>
+      <td>NaN</td>
+      <td>69</td>
+      <td>NaN</td>
+      <td>0.7551</td>
+      <td>0.900</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>IPTW (stabilized weights)</td>
+      <td>Average treatment effect (risk difference)</td>
+      <td>0.1058</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.3384</td>
+      <td>69</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.576</td>
+      <td>0.186</td>
+      <td>1.781</td>
+      <td>0.7896</td>
+      <td>0.6837</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>IPTW Cox proportional hazards (lifelines)</td>
+      <td>Hazard ratio (Other vs Metformin)</td>
+      <td>1.9280</td>
+      <td>0.8540</td>
+      <td>4.3530</td>
+      <td>0.1139</td>
+      <td>69</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>55.0</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>7. Sensitivity Analyses</h2>
+      <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>analysis</th>
+      <th>n_matched_pairs</th>
+      <th>odds_ratio</th>
+      <th>p_value</th>
+      <th>pct_balanced</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PSM caliper 0.1 SD</td>
+      <td>8</td>
+      <td>0.294</td>
+      <td>0.4737</td>
+      <td>71.4</td>
+    </tr>
+    <tr>
+      <td>PSM caliper 0.2 SD</td>
+      <td>8</td>
+      <td>0.294</td>
+      <td>0.4737</td>
+      <td>71.4</td>
+    </tr>
+    <tr>
+      <td>PSM caliper 0.3 SD</td>
+      <td>8</td>
+      <td>0.294</td>
+      <td>0.4737</td>
+      <td>71.4</td>
+    </tr>
+    <tr>
+      <td>PSM reduced covariate model (age, gender only)</td>
+      <td>12</td>
+      <td>2.200</td>
+      <td>0.5443</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+    <section>
+      <h2>8. Visualizations</h2>
+      <figure><img src="figures/ps_distribution_before_matching.png" alt="ps_distribution_before_matching.png"><figcaption>ps_distribution_before_matching.png</figcaption></figure><figure><img src="figures/ps_distribution_after_matching.png" alt="ps_distribution_after_matching.png"><figcaption>ps_distribution_after_matching.png</figcaption></figure><figure><img src="figures/causal_inference_love_plot.png" alt="causal_inference_love_plot.png"><figcaption>causal_inference_love_plot.png</figcaption></figure><figure><img src="figures/treatment_effect_estimates.png" alt="treatment_effect_estimates.png"><figcaption>treatment_effect_estimates.png</figcaption></figure>
+    </section>
+
+    <section>
+      <h2>9. Limitations</h2>
+      <ul>
+        <li>Small sample size limits matching and IPTW precision.</li>
+        <li>Residual unmeasured confounding (disease severity, HbA1c) may persist.</li>
+        <li>Propensity score model assumes correct specification and positivity.</li>
+        <li>Synthea synthetic data may not reflect real-world treatment pathways.</li>
+        <li>Matching discards unmatched patients, reducing generalizability.</li>
+      </ul>
+      <div class="warning"><strong>Because this is an observational study, causal interpretation relies on assumptions including no unmeasured confounding and correct model specification.</strong></div>
+    </section>
+  </div>
+</body>
+</html>
