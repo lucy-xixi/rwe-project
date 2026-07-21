@@ -7,6 +7,12 @@
 基于 **Synthea 合成 EHR 数据**的糖尿病药物 **真实世界证据（RWE）** 观察性研究项目。  
 完整实现从数据质控、队列定义、基线特征、暴露/outcome 分析，到倾向性评分与高级因果推断，最终生成制药行业风格的 RWE 证据报告。
 
+## 可视化预览
+
+![Cohort Flow](reports/figures/figure_cohort_flow.png)
+
+*队列筛选流程：全库患者 → T2DM 诊断 → 用药暴露 → 最终分析队列 N=69*
+
 ---
 
 **优先打开：**
@@ -44,10 +50,12 @@ rwe-project/
 ├── reports/                  # 各步骤输出报告、表格、图表
 │   └── figures/              # 可视化图片
 ├── src/
+│   ├── data_profile.py         # 数据集描述性概览（记录数、时间范围、关键字段分布）
 │   ├── cohort_definition.py
 │   ├── data_quality.py
 │   ├── baseline_characteristics.py
 │   ├── baseline_analysis.py
+│   ├── baseline_observations.py
 │   ├── treatment_exposure.py
 │   ├── outcome_analysis.py
 │   ├── causal_inference.py
@@ -60,10 +68,11 @@ rwe-project/
 
 ---
 
-## 分析流程（Step 1–8）
+## 分析流程（Step 0–8）
 
 | Step | 模块 | Notebook | 主要输出 |
 | --- | --- | --- | --- |
+| **0** 数据概览（可选） | `data_profile.py` | — | `synthea_data_profile.md`（各表记录数、字段分布、主外键关系） |
 | **1** 数据质控 | `data_quality.py` | `01_data_quality_assessment.ipynb` | `data_quality_report.html` |
 | **2** 队列定义 | `cohort_definition.py` | `02_cohort_definition.ipynb` | `study_population.csv`, `cohort_flow.csv` |
 | **3** 基线特征 | `baseline_analysis.py` | `03_baseline_characteristics.ipynb` | `baseline_characteristics_table.csv`, Table 1 |
@@ -73,7 +82,8 @@ rwe-project/
 | **7** 高级因果推断 | `advanced_causal_inference.py` | `07_causal_inference.ipynb` | `causal_effect_estimates.csv`, DoWhy / EconML |
 | **8** RWE 证据报告 | `rwe_report_generation.py` | `08_rwe_evidence_generation.ipynb` | `RWE_Evidence_Report.html/.pdf`, Table1–3 xlsx |
 
-各步骤按顺序依赖前序输出；Step 8 汇总 Step 1–7 的全部结果。
+各步骤按顺序依赖前序输出；Step 8 汇总 Step 1–7 的全部结果。  
+**Step 0** 为可选的数据探索步骤，在正式质控前快速了解 Synthea CSV 的规模与结构。
 
 ---
 
@@ -104,6 +114,7 @@ pip install -r requirements.txt
 ```powershell
 cd e:\rwe-project\src
 
+python data_profile.py          # 可选：生成数据集概览报告
 python data_quality.py
 python cohort_definition.py
 python baseline_analysis.py
@@ -129,6 +140,7 @@ jupyter notebook
 
 | 文件 | 说明 |
 | --- | --- |
+| `reports/synthea_data_profile.md` | Step 0 数据集概览（记录数、字段分布、表间关系） |
 | `reports/RWE_Evidence_Report.html` | 完整 RWE 证据报告（HTML） |
 | `reports/RWE_Evidence_Report.pdf` | PDF 版报告 |
 | `reports/Table1_Baseline.xlsx` | 基线特征表（含 SMD） |
@@ -195,8 +207,3 @@ jupyter notebook
 使用 Synthea 数据请遵循 [Synthea 项目](https://github.com/synthetichealth/synthea) 的相关许可。
 
 ---
-
-## 联系方式
-
-如有问题或改进建议，请在 GitHub 仓库提交 Issue 或 Pull Request。  
-**简历/GitHub 链接示例：** `github.com/YOUR_USERNAME/rwe-project`
