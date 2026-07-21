@@ -1,2 +1,2 @@
 metric,n_bootstrap,estimate,ci_lower,ci_upper
-IPTW ATE risk difference (bootstrap),500,-0.0689,-0.283,0.1957
+IPTW ATE risk difference (bootstrap),500,-0.1342,-0.3017,0.0193

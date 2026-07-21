@@ -27,12 +27,14 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 from baseline_analysis import standardized_mean_difference
+from baseline_observations import attach_baseline_labs
 from cohort_definition import (
     DEFAULT_DATA_DIR,
     DEFAULT_REPORT_DIR,
     TREATMENT_GROUP_METFORMIN,
     TREATMENT_GROUP_OTHER,
     load_conditions,
+    load_observations,
     parse_datetime,
 )
 
@@ -60,6 +62,8 @@ CONFOUNDER_PATTERNS: dict[str, re.Pattern[str]] = {
 CONFOUNDER_COLUMNS = [
     "age",
     "female",
+    "baseline_hba1c",
+    "baseline_bmi",
     "hypertension",
     "cardiovascular_disease",
     "obesity",
@@ -125,6 +129,7 @@ def load_treatment_exposure(report_dir: Path) -> pd.DataFrame:
 def build_confounders(
     study_population: pd.DataFrame,
     conditions: pd.DataFrame,
+    observations: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     """Assemble pre-treatment confounders for propensity score modeling."""
     rows: list[dict[str, object]] = []
@@ -155,7 +160,13 @@ def build_confounders(
             )
         rows.append(record)
 
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    if observations is not None and not observations.empty:
+        df = attach_baseline_labs(df, observations)
+    else:
+        df["baseline_hba1c"] = np.nan
+        df["baseline_bmi"] = np.nan
+    return df
 
 
 def attach_outcome(
@@ -713,9 +724,11 @@ def write_html_report(
       <p>Baseline covariates measured at or before index_date (treatment initiation):</p>
       <ul>
         <li>Demographics: age, gender (female indicator)</li>
-        <li>Clinical: hypertension, cardiovascular disease, obesity, hyperlipidemia, chronic kidney disease</li>
+        <li>Clinical measurements: baseline HbA1c (%), BMI (kg/m²) from pre-index observations</li>
+        <li>Comorbidities: hypertension, cardiovascular disease, obesity, hyperlipidemia, chronic kidney disease</li>
       </ul>
-      <p>These variables are established confounders of diabetes treatment selection and complication risk.</p>
+      <p>Continuous labs use the most recent pre-index value; missing HbA1c/BMI are median-imputed in the PS model.
+      These variables are established confounders of diabetes treatment selection and complication risk.</p>
     </section>
 
     <section>
@@ -757,7 +770,7 @@ def write_html_report(
       <h2>9. Limitations</h2>
       <ul>
         <li>Small sample size limits matching and IPTW precision.</li>
-        <li>Residual unmeasured confounding (disease severity, HbA1c) may persist.</li>
+        <li>Residual unmeasured confounding (insulin resistance, medication adherence, lifestyle) may persist despite HbA1c/BMI adjustment.</li>
         <li>Propensity score model assumes correct specification and positivity.</li>
         <li>Synthea synthetic data may not reflect real-world treatment pathways.</li>
         <li>Matching discards unmatched patients, reducing generalizability.</li>
@@ -793,8 +806,11 @@ def run_causal_inference(
     followup = pd.read_csv(followup_path) if followup_path.is_file() else None
 
     conditions = load_conditions(data_dir)
-    confounders = build_confounders(study_population, conditions)
+    observations = load_observations(data_dir)
+    confounders = build_confounders(study_population, conditions, observations)
     analysis_data = attach_outcome(confounders, outcome_events, followup)
+
+    confounders.to_csv(report_dir / "baseline_covariates.csv", index=False)
 
     ps_scores, ps_summary = fit_propensity_score_model(analysis_data)
     analysis_data = analysis_data.merge(

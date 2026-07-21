@@ -179,9 +179,9 @@ jupyter notebook
 
 ## 统计方法概要
 
-- **基线比较**：Table 1、t 检验 / Mann-Whitney、卡方 / Fisher、SMD、Love plot  
+- **基线比较**：Table 1（含 pre-index HbA1c、BMI）、t 检验 / Mann-Whitney、卡方 / Fisher、SMD、Love plot  
 - **结局分析**：事件率（/100 patient-years）、Kaplan-Meier、log-rank、未调整 logistic  
-- **因果推断（Step 6）**：Logistic PS、1:1 最近邻匹配、IPTW、匹配后 logistic、风险差  
+- **因果推断（Step 6）**：Logistic PS（含 HbA1c、BMI）、1:1 最近邻匹配、IPTW、匹配后 logistic、风险差  
 - **高级因果（Step 7）**：多变量回归、IPTW ATE/ATT、双重稳健 AIPW、Bootstrap CI、DoWhy、EconML LinearDML、敏感性分析、亚组效应  
 - **因果假设**：可交换性（无未测量混杂）、positivity（重叠性）、一致性  
 
@@ -213,7 +213,7 @@ jupyter notebook
 
 1. **合成数据**：不代表真实世界治疗路径与编码习惯  
 2. **样本量小**：匹配、IPTW、亚组分析精度有限  
-3. **残余混杂**：HbA1c、疾病严重程度等未完全测量  
+3. **残余混杂**：已纳入基线 HbA1c 与 BMI（`observations.csv`），但胰岛素抵抗、依从性、生活方式等仍可能未测量  
 4. **依从性**：用药处方 ≠ 实际服药  
 5. **外推性**：单队列结果需外部验证  
 

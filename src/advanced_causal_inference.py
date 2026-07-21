@@ -22,6 +22,7 @@ import seaborn as sns
 import statsmodels.api as sm
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor
 
+from baseline_observations import impute_confounder_medians
 from causal_inference import (
     CONFOUNDER_COLUMNS,
     RANDOM_SEED,
@@ -41,6 +42,7 @@ from cohort_definition import (
     DEFAULT_DATA_DIR,
     DEFAULT_REPORT_DIR,
     load_conditions,
+    load_observations,
 )
 
 logger = logging.getLogger(__name__)
@@ -70,6 +72,8 @@ CAUSAL_ASSUMPTIONS = {
 COVARIATE_LABELS = {
     "age": "Age",
     "female": "Gender (female)",
+    "baseline_hba1c": "HbA1c (%)",
+    "baseline_bmi": "BMI (kg/m2)",
     "hypertension": "Hypertension",
     "cardiovascular_disease": "Cardiovascular disease",
     "obesity": "Obesity",
@@ -116,12 +120,16 @@ def load_baseline_covariates(report_dir: Path, data_dir: Path) -> pd.DataFrame:
         path = report_dir / name
         if path.is_file():
             df = pd.read_csv(path)
+            for col in ("baseline_hba1c", "baseline_bmi"):
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors="coerce")
             logger.info("Loaded baseline covariates from %s", path)
             return df
 
     study = load_study_population(report_dir)
     conditions = load_conditions(data_dir)
-    df = build_confounders(study, conditions)
+    observations = load_observations(data_dir)
+    df = build_confounders(study, conditions, observations)
     logger.info(
         "Built patient-level baseline covariates from study_population + conditions "
         "(baseline_covariates.csv not found)"
@@ -140,6 +148,7 @@ def prepare_analysis_data(
     followup = pd.read_csv(followup_path) if followup_path.is_file() else None
 
     analysis = attach_outcome(baseline, outcomes, followup)
+    analysis = impute_confounder_medians(analysis, CONFOUNDER_COLUMNS)
     analysis["comorbidity_burden"] = analysis[
         ["hypertension", "cardiovascular_disease", "obesity", "hyperlipidemia", "chronic_kidney_disease"]
     ].sum(axis=1)
@@ -173,6 +182,7 @@ def create_causal_dag(figures_dir: Path) -> Path:
         "Age": (1.5, 8.0, "#64748b"),
         "Gender": (1.5, 6.5, "#64748b"),
         "Disease severity": (1.5, 3.5, "#64748b"),
+        "HbA1c / BMI": (3.2, 3.5, "#64748b"),
         "Comorbidities": (1.5, 1.5, "#64748b"),
     }
 
@@ -197,6 +207,7 @@ def create_causal_dag(figures_dir: Path) -> Path:
         ("Age", "Treatment"), ("Age", "Outcome"),
         ("Gender", "Treatment"), ("Gender", "Outcome"),
         ("Disease severity", "Treatment"), ("Disease severity", "Outcome"),
+        ("HbA1c / BMI", "Treatment"), ("HbA1c / BMI", "Outcome"),
         ("Comorbidities", "Treatment"), ("Comorbidities", "Outcome"),
         ("Treatment", "Outcome"),
     ]
@@ -220,8 +231,8 @@ def create_causal_dag(figures_dir: Path) -> Path:
     )
     ax.text(
         5, 0.4,
-        "Dashed conceptual link: disease severity is partially unmeasured; "
-        "comorbidity burden serves as a proxy in analysis.",
+        "Dashed conceptual link: baseline HbA1c and BMI partially capture glycemic control and adiposity; "
+        "residual severity (insulin resistance, adherence) may remain unmeasured.",
         ha="center",
         fontsize=9,
         color="#475569",
@@ -561,7 +572,14 @@ def run_sensitivity_analyses(data: pd.DataFrame) -> pd.DataFrame:
 
     for spec, covs in [
         ("Demographics only PS", ["age", "female"]),
-        ("Clinical comorbidities only PS", [c for c in CONFOUNDER_COLUMNS if c not in ("age", "female")]),
+        (
+            "Comorbidities + labs (no demographics)",
+            [c for c in CONFOUNDER_COLUMNS if c not in ("age", "female")],
+        ),
+        (
+            "Without baseline labs",
+            [c for c in CONFOUNDER_COLUMNS if c not in ("baseline_hba1c", "baseline_bmi")],
+        ),
         ("Full covariate PS", CONFOUNDER_COLUMNS),
     ]:
         ps, _ = fit_propensity_score_model(data, covariates=covs)
@@ -860,8 +878,8 @@ Adjusted for: {confounder_list}</pre>
       <h2>8. Limitations</h2>
       <ul>
         <li>Small sample (N={len(data)}) limits precision and subgroup analyses.</li>
-        <li>Disease severity is only partially captured via comorbidity burden.</li>
-        <li>Residual confounding from unmeasured clinical factors (e.g., HbA1c) may remain.</li>
+        <li>Disease severity is partially captured via baseline HbA1c, BMI, and comorbidity burden; insulin resistance and adherence remain unmeasured.</li>
+        <li>Residual confounding from unmeasured clinical and behavioral factors may remain despite lab adjustment.</li>
         <li>Synthea synthetic data may not reflect real-world treatment pathways.</li>
         <li>Positivity violations in extreme PS strata can destabilize weighting.</li>
       </ul>

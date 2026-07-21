@@ -27,8 +27,10 @@ from cohort_definition import (
     TREATMENT_GROUP_METFORMIN,
     TREATMENT_GROUP_OTHER,
     load_conditions,
+    load_observations,
     parse_datetime,
 )
+from baseline_observations import attach_baseline_labs
 
 logger = logging.getLogger(__name__)
 
@@ -346,6 +348,54 @@ def build_table1(patient_data: pd.DataFrame) -> pd.DataFrame:
         "continuous",
     )
 
+    def add_continuous_lab(col: str, label: str, section: str = "Clinical measurements") -> None:
+        if col not in patient_data.columns:
+            return
+        cmp = compare_continuous(df_a[col].to_numpy(), df_b[col].to_numpy())
+        n_miss_a = int(df_a[col].isna().sum())
+        n_miss_b = int(df_b[col].isna().sum())
+        add_row(
+            f"{label} — mean (SD)",
+            section,
+            _format_mean_sd(df_a[col]),
+            _format_mean_sd(df_b[col]),
+            _format_mean_sd(df_all[col]),
+            standardized_mean_difference(df_a[col].to_numpy(), df_b[col].to_numpy()),
+            cmp["p_value"],
+            str(cmp["primary_test"]),
+            str(cmp["significance"]),
+            "continuous",
+            t_p=float(cmp["t_p_value"]),
+            mwu_p=float(cmp["mwu_p_value"]),
+        )
+        add_row(
+            f"{label} — median (IQR)",
+            section,
+            _format_median_iqr(df_a[col]),
+            _format_median_iqr(df_b[col]),
+            _format_median_iqr(df_all[col]),
+            np.nan,
+            np.nan,
+            "—",
+            "",
+            "continuous",
+        )
+        add_row(
+            f"{label} — missing, n",
+            section,
+            str(n_miss_a),
+            str(n_miss_b),
+            str(int(df_all[col].isna().sum())),
+            np.nan,
+            np.nan,
+            "—",
+            "",
+            "count",
+        )
+
+    add_continuous_lab("baseline_hba1c", "HbA1c (%)")
+    add_continuous_lab("baseline_bmi", "BMI (kg/m2)")
+
     # Gender
     gender_levels = sorted(patient_data["gender"].dropna().unique())
     gender_table_a = df_a["gender"].value_counts()
@@ -538,6 +588,7 @@ def write_html_report(
     n_b = int((patient_data["treatment_group"] == TREATMENT_B).sum())
 
     demo_table = table1[table1["section"] == "Demographics"]
+    labs_table = table1[table1["section"] == "Clinical measurements"]
     clinical_table = table1[table1["section"] == "Clinical characteristics"]
 
     display_cols = [
@@ -620,6 +671,14 @@ def write_html_report(
     </section>
 
     <section>
+      <h2>Table 1 — Clinical Measurements (Pre-Index Labs)</h2>
+      <p class="note">HbA1c and BMI extracted from Synthea observations.csv (LOINC 4548-4, 39156-5):
+      most recent value on or before index_date (365-day lookback when available). Missing values
+      reported separately; median imputation applied in propensity score models (Steps 6–7).</p>
+      {_table_html(labs_table, display_cols) if not labs_table.empty else "<p>No laboratory data available.</p>"}
+    </section>
+
+    <section>
       <h2>Table 1 — Clinical Characteristics (Baseline Comorbidities)</h2>
       <p class="note">Comorbidities ascertained from conditions recorded at or before index_date.</p>
       {_table_html(clinical_table, display_cols)}
@@ -663,7 +722,9 @@ def run_baseline_analysis(
 
     study_population = load_study_cohort(report_dir)
     conditions = load_conditions(data_dir)
+    observations = load_observations(data_dir)
     patient_data = flag_comorbidities(conditions, study_population)
+    patient_data = attach_baseline_labs(patient_data, observations)
 
     table1 = build_table1(patient_data)
     table_path = report_dir / "baseline_characteristics_table.csv"

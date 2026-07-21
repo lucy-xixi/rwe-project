@@ -3,6 +3,12 @@ Demographics,N,49,20,69,0.0,True,—,,,,,,count
 Demographics,"Age, years — mean (SD)",54.8 (11.8),69.4 (16.1),59.1 (14.7),-1.036,False,Mann-Whitney U,0.0003,0.001,0.0003,,***,continuous
 Demographics,"Age, years — median (IQR)",51.2 (47.6–63.2),66.1 (56.1–81.5),55.6 (49.4–66.8),,,—,,,,,,continuous
 Demographics,"Age, years — min / max",36.3 / 95.9,44.6 / 99.8,36.3 / 99.8,,,—,,,,,,continuous
+Clinical measurements,HbA1c (%) — mean (SD),7.4 (0.5),7.0 (0.2),7.3 (0.5),1.157,False,Mann-Whitney U,0.0024,0.0042,0.0024,,**,continuous
+Clinical measurements,HbA1c (%) — median (IQR),7.5 (7.5–7.6),6.9 (6.9–7.0),7.5 (6.9–7.6),,,—,,,,,,continuous
+Clinical measurements,"HbA1c (%) — missing, n",31,13,44,,,—,,,,,,count
+Clinical measurements,BMI (kg/m2) — mean (SD),30.3 (0.5),30.7 (5.3),30.4 (2.7),-0.108,False,Mann-Whitney U,0.1071,0.8461,0.1071,,NS,continuous
+Clinical measurements,BMI (kg/m2) — median (IQR),30.2 (30.1–30.4),27.8 (27.6–32.6),30.2 (30.0–30.4),,,—,,,,,,continuous
+Clinical measurements,"BMI (kg/m2) — missing, n",31,13,44,,,—,,,,,,count
 Demographics,  Gender: F,24 (49.0%),13 (65.0%),37 (53.6%),-0.322,False,Chi-square,0.3448,,,0.892,NS,categorical
 Demographics,  Gender: M,25 (51.0%),7 (35.0%),32 (46.4%),0.322,False,—,,,,,,categorical
 Demographics,  Race: asian,1 (2.0%),0 (0.0%),1 (1.4%),0.202,False,Chi-square,0.4631,,,3.598,NS,categorical

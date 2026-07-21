@@ -70,7 +70,7 @@
     </figure>
 
     <h3>3.2 Baseline characteristics (Table 1)</h3>
-    <p>Baseline characteristics differed between treatment groups before adjustment. 3 of 17 evaluated variables achieved |SMD| < 0.1 (18%), indicating incomplete balance at baseline. Older age, higher comorbidity burden, and greater diabetic nephropathy prevalence in the other-medication group suggest confounding by indication.</p>
+    <p>Baseline characteristics differed between treatment groups before adjustment. 3 of 19 evaluated variables achieved |SMD| < 0.1 (16%), indicating incomplete balance at baseline. Older age, higher comorbidity burden, and greater diabetic nephropathy prevalence in the other-medication group suggest confounding by indication.</p>
     <table class="dataframe table">
   <thead>
     <tr style="text-align: right;">
@@ -125,6 +125,72 @@
       <td>36.3 / 95.9</td>
       <td>44.6 / 99.8</td>
       <td>36.3 / 99.8</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Clinical measurements</td>
+      <td>HbA1c (%) — mean (SD)</td>
+      <td>7.4 (0.5)</td>
+      <td>7.0 (0.2)</td>
+      <td>7.3 (0.5)</td>
+      <td>1.157</td>
+      <td>False</td>
+      <td>0.0024</td>
+      <td>**</td>
+    </tr>
+    <tr>
+      <td>Clinical measurements</td>
+      <td>HbA1c (%) — median (IQR)</td>
+      <td>7.5 (7.5–7.6)</td>
+      <td>6.9 (6.9–7.0)</td>
+      <td>7.5 (6.9–7.6)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Clinical measurements</td>
+      <td>HbA1c (%) — missing, n</td>
+      <td>31</td>
+      <td>13</td>
+      <td>44</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Clinical measurements</td>
+      <td>BMI (kg/m2) — mean (SD)</td>
+      <td>30.3 (0.5)</td>
+      <td>30.7 (5.3)</td>
+      <td>30.4 (2.7)</td>
+      <td>-0.108</td>
+      <td>False</td>
+      <td>0.1071</td>
+      <td>NS</td>
+    </tr>
+    <tr>
+      <td>Clinical measurements</td>
+      <td>BMI (kg/m2) — median (IQR)</td>
+      <td>30.2 (30.1–30.4)</td>
+      <td>27.8 (27.6–32.6)</td>
+      <td>30.2 (30.0–30.4)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>Clinical measurements</td>
+      <td>BMI (kg/m2) — missing, n</td>
+      <td>31</td>
+      <td>13</td>
+      <td>44</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -695,12 +761,12 @@
     <tr>
       <td>Regression adjustment</td>
       <td>Odds ratio (Other vs Metformin)</td>
-      <td>1.1950</td>
-      <td>0.101–14.153</td>
-      <td>0.8878</td>
+      <td>3.5260</td>
+      <td>0.604–20.595</td>
+      <td>0.1617</td>
       <td>—</td>
       <td>—</td>
-      <td>1.195</td>
+      <td>3.526</td>
       <td>69</td>
       <td>—</td>
       <td>—</td>
@@ -710,45 +776,45 @@
     <tr>
       <td>Inverse probability of treatment weighting (IPTW)</td>
       <td>ATE — risk difference (Metformin − Other)</td>
-      <td>0.1058</td>
+      <td>-0.1291</td>
       <td>—</td>
-      <td>0.3384</td>
-      <td>0.1058</td>
+      <td>0.2863</td>
+      <td>-0.1291</td>
       <td>—</td>
-      <td>0.576</td>
+      <td>2.814</td>
       <td>69</td>
       <td>—</td>
-      <td>0.186–1.781</td>
-      <td>0.7896</td>
-      <td>0.6837</td>
+      <td>0.42–18.844</td>
+      <td>0.7796</td>
+      <td>0.9087</td>
     </tr>
     <tr>
       <td>IPTW — average treatment effect on the treated (ATT)</td>
       <td>ATT — risk difference (Metformin − Other)</td>
-      <td>0.1407</td>
+      <td>-0.1585</td>
       <td>—</td>
-      <td>0.2090</td>
+      <td>0.2391</td>
       <td>—</td>
-      <td>0.1407</td>
-      <td>0.517</td>
+      <td>-0.1585</td>
+      <td>3.431</td>
       <td>69</td>
       <td>—</td>
-      <td>0.184–1.447</td>
+      <td>0.441–26.714</td>
       <td>—</td>
       <td>—</td>
     </tr>
     <tr>
       <td>Doubly robust (AIPW)</td>
       <td>Average treatment effect (risk difference)</td>
-      <td>0.1955</td>
+      <td>-0.1867</td>
       <td>—</td>
-      <td>0.2399</td>
+      <td>0.0436</td>
       <td>—</td>
       <td>—</td>
-      <td>0.236</td>
+      <td>7.865</td>
       <td>69</td>
       <td>—</td>
-      <td>0.021–2.626</td>
+      <td>1.061–58.299</td>
       <td>—</td>
       <td>—</td>
     </tr>
@@ -756,7 +822,7 @@
 </table>
 
     <div class="key-finding">
-      <strong>Statistical interpretation.</strong> After adjustment for measured baseline characteristics, treatment group differences in the primary composite outcome were attenuated relative to unadjusted analyses. Multivariable logistic regression yielded an adjusted odds ratio of 1.195 (Other vs Metformin), with wide confidence intervals reflecting the modest sample size. Propensity score matching on 8 pairs produced unstable effect estimates due to small matched sample size and outcome separation. The estimated treatment effect represents the association between treatment exposure and clinical outcomes under causal assumptions (exchangeability, positivity, consistency), not a definitive causal claim given synthetic data and residual confounding.
+      <strong>Statistical interpretation.</strong> After adjustment for measured baseline characteristics, treatment group differences in the primary composite outcome were attenuated relative to unadjusted analyses. Multivariable logistic regression yielded an adjusted odds ratio of 3.526 (Other vs Metformin), with wide confidence intervals reflecting the modest sample size. Propensity score matching on 8 pairs produced unstable effect estimates due to small matched sample size and outcome separation. The estimated treatment effect represents the association between treatment exposure and clinical outcomes under causal assumptions (exchangeability, positivity, consistency), not a definitive causal claim given synthetic data and residual confounding.
     </div>
 
     <h2>4. Discussion</h2>
@@ -767,9 +833,9 @@
       
       <li>Synthetic data source (Synthea): results may not reflect real-world treatment patterns, coding practices, or clinical heterogeneity in live EHR/claims databases.</li>
       
-      <li>Residual confounding: unmeasured disease severity (e.g., HbA1c, insulin resistance) may persist despite multivariable and propensity score adjustment.</li>
+      <li>Residual confounding: baseline HbA1c and BMI from pre-index observations are included in propensity score and outcome models; unmeasured insulin resistance, adherence, and lifestyle factors may still bias estimates.</li>
       
-      <li>Missing variables: laboratory values, medication adherence, and lifestyle factors were not fully captured in the synthetic dataset.</li>
+      <li>Missing variables: medication adherence, detailed lab panels beyond HbA1c/BMI, and lifestyle factors were not fully captured in the synthetic dataset.</li>
       
       <li>Medication adherence uncertainty: pharmacy fill data proxy exposure but do not confirm ingestion.</li>
       

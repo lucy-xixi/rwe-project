@@ -558,10 +558,11 @@ def generate_limitations() -> list[str]:
     return [
         "Synthetic data source (Synthea): results may not reflect real-world treatment patterns, "
         "coding practices, or clinical heterogeneity in live EHR/claims databases.",
-        "Residual confounding: unmeasured disease severity (e.g., HbA1c, insulin resistance) "
-        "may persist despite multivariable and propensity score adjustment.",
-        "Missing variables: laboratory values, medication adherence, and lifestyle factors were "
-        "not fully captured in the synthetic dataset.",
+        "Residual confounding: baseline HbA1c and BMI from pre-index observations are included in "
+        "propensity score and outcome models; unmeasured insulin resistance, adherence, and lifestyle "
+        "factors may still bias estimates.",
+        "Missing variables: medication adherence, detailed lab panels beyond HbA1c/BMI, and lifestyle "
+        "factors were not fully captured in the synthetic dataset.",
         "Medication adherence uncertainty: pharmacy fill data proxy exposure but do not confirm ingestion.",
         "Small sample size (N=69) limits statistical power, subgroup analyses, and precision of effect estimates.",
         "Generalizability: findings from a single synthetic cohort cannot be extrapolated to specific "

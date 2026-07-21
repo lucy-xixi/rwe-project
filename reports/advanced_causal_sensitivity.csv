@@ -1,14 +1,17 @@
 analysis_type,specification,effect_estimate,p_value,reference_or,n_pairs
-Drop-one covariate,Exclude Age,1.187,0.892,1.195,
-Drop-one covariate,Exclude Gender (female),1.183,0.901,1.195,
-Drop-one covariate,Exclude Hypertension,1.207,0.8761,1.195,
-Drop-one covariate,Exclude Cardiovascular disease,1.22,0.871,1.195,
-Drop-one covariate,Exclude Obesity,0.834,0.8398,1.195,
-Drop-one covariate,Exclude Hyperlipidemia,1.151,0.9154,1.195,
-Drop-one covariate,Exclude Kidney disease,3.686,0.2413,1.195,
-Propensity model specification,Demographics only PS,-0.1418,,1.195,
-Propensity model specification,Clinical comorbidities only PS,0.1036,,1.195,
-Propensity model specification,Full covariate PS,0.1058,,1.195,
-Matching caliper,1:1 NN caliper 0.1 SD,0.125,,1.195,8.0
-Matching caliper,1:1 NN caliper 0.2 SD,0.125,,1.195,8.0
-Matching caliper,1:1 NN caliper 0.3 SD,0.125,,1.195,8.0
+Drop-one covariate,Exclude Age,3.254,0.2031,3.526,
+Drop-one covariate,Exclude Gender (female),3.358,0.1838,3.526,
+Drop-one covariate,Exclude HbA1c (%),2.42,0.2667,3.526,
+Drop-one covariate,Exclude BMI (kg/m2),1.526,0.7691,3.526,
+Drop-one covariate,Exclude Hypertension,3.325,0.1657,3.526,
+Drop-one covariate,Exclude Cardiovascular disease,3.521,0.1617,3.526,
+Drop-one covariate,Exclude Obesity,1.259,0.7714,3.526,
+Drop-one covariate,Exclude Hyperlipidemia,3.348,0.1862,3.526,
+Drop-one covariate,Exclude Kidney disease,9.403,0.0045,3.526,
+Propensity model specification,Demographics only PS,-0.1418,,3.526,
+Propensity model specification,Comorbidities + labs (no demographics),-0.1249,,3.526,
+Propensity model specification,Without baseline labs,0.1058,,3.526,
+Propensity model specification,Full covariate PS,-0.1291,,3.526,
+Matching caliper,1:1 NN caliper 0.1 SD,0.125,,3.526,8.0
+Matching caliper,1:1 NN caliper 0.2 SD,0.125,,3.526,8.0
+Matching caliper,1:1 NN caliper 0.3 SD,0.125,,3.526,8.0
