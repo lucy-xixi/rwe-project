@@ -9,11 +9,6 @@
 
 ---
 
-## Interview / Portfolio 速览
-
-
-** 研究问题 → 队列 1135→69 → Table 1 基线不平衡 → 未调整 Other 组事件率更高 → PSM/IPTW/回归校正后效应缩小且 CI 宽 → 强调方法管线 + 局限（合成数据、小样本）
-
 **优先打开：**
 
 1. `reports/RWE_Evidence_Report.pdf` — 完整证据报告  
